@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>תילתול – מספרות שיער מתולתל בישראל</title>
+  <meta name="description" content="מצאי את המספרה המושלמת לשיער מתולתל בקרבתך. תילתול מרכזת את כל המספרות המתמחות בשיער מתולתל בישראל." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { heebo: ['Heebo', 'sans-serif'] },
+          colors: {
+            lilac: {
+              50:  '#f5f2fc',
+              100: '#ede8f9',
+              200: '#ddd4f5',
+              300: '#c8b8ef',
+              400: '#b39ddb',
+              500: '#9d7ecb',
+              600: '#8a63b8',
+              700: '#7550a0',
+              800: '#624285',
+              900: '#51376d',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * { font-family: 'Heebo', sans-serif; }
+    html { scroll-behavior: smooth; }
+
+    .fade-up {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .fade-up-delay-1 { transition-delay: 0.1s; }
+    .fade-up-delay-2 { transition-delay: 0.2s; }
+    .fade-up-delay-3 { transition-delay: 0.3s; }
+
+    /* Tooltip pulse on hero map */
+    @keyframes pulse-dot {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.4); opacity: 0.7; }
+    }
+    .pulse-dot { animation: pulse-dot 2.2s ease-in-out infinite; }
+
+    /* Tooltip float */
+    @keyframes float-tooltip {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-3px); }
+    }
+    .float-tooltip { animation: float-tooltip 3s ease-in-out infinite; }
+
+    /* Smooth card hover */
+    .card-hover {
+      transition: box-shadow 0.25s ease, transform 0.25s ease;
+    }
+    .card-hover:hover {
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+      transform: translateY(-2px);
+    }
+
+    /* Nav link underline */
+    .nav-link {
+      position: relative;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      right: 0;
+      width: 0;
+      height: 1.5px;
+      background: #b39ddb;
+      transition: width 0.25s ease;
+    }
+    .nav-link:hover::after { width: 100%; }
+
+    /* Store button hover */
+    .store-btn {
+      transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .store-btn:hover {
+      background: #1a1a1a !important;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+    }
+
+    /* Step connector line */
+    .step-line {
+      position: absolute;
+      top: 22px;
+      left: -50%;
+      width: 100%;
+      height: 1px;
+      background: #e5e7eb;
+      z-index: 0;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #f9f9f9; }
+    ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 3px; }
+  </style>
+</head>
+<body class="bg-white text-gray-900 antialiased">
+
+<!-- ═══════════════════════════════════════════
+     NAVBAR
+════════════════════════════════════════════ -->
+<header class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-gray-100">
+  <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+    <!-- Logo -->
+    <a href="#" class="flex items-center gap-2 group">
+      <div class="w-8 h-8 rounded-xl bg-lilac-400 flex items-center justify-center">
+        <i data-lucide="scissors" class="w-4 h-4 text-white"></i>
+      </div>
+      <span class="text-lg font-700 tracking-tight text-gray-900">תילתול</span>
+    </a>
+
+    <!-- Desktop Nav -->
+    <nav class="hidden md:flex items-center gap-8 text-sm text-gray-600 font-500">
+      <a href="#how" class="nav-link hover:text-gray-900 transition-colors">איך זה עובד</a>
+      <a href="#features" class="nav-link hover:text-gray-900 transition-colors">יתרונות</a>
+      <a href="#testimonials" class="nav-link hover:text-gray-900 transition-colors">המלצות</a>
+    </nav>
+
+    <!-- CTA -->
+    <a href="#download" class="hidden md:inline-flex items-center gap-2 bg-lilac-400 hover:bg-lilac-500 text-white text-sm font-600 px-4 py-2 rounded-xl transition-colors">
+      <i data-lucide="download" class="w-4 h-4"></i>
+      הורידי את האפליקציה
+    </a>
+
+    <!-- Mobile menu icon -->
+    <button class="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors" onclick="toggleMenu()">
+      <i data-lucide="menu" class="w-5 h-5 text-gray-700" id="menu-icon"></i>
+    </button>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="hidden md:hidden border-t border-gray-100 bg-white px-6 py-4 space-y-3">
+    <a href="#how" class="block text-sm text-gray-600 py-1">איך זה עובד</a>
+    <a href="#features" class="block text-sm text-gray-600 py-1">יתרונות</a>
+    <a href="#testimonials" class="block text-sm text-gray-600 py-1">המלצות</a>
+    <a href="#download" class="inline-flex items-center gap-2 bg-lilac-400 text-white text-sm font-600 px-4 py-2 rounded-xl mt-2">הורידי את האפליקציה</a>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════════════
+     HERO
+════════════════════════════════════════════ -->
+<section class="relative overflow-hidden bg-white pt-16 pb-20 lg:pt-24 lg:pb-32">
+  <!-- Subtle bg shape -->
+  <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+    <div class="absolute -top-32 -left-32 w-96 h-96 rounded-full bg-lilac-50 opacity-60"></div>
+    <div class="absolute bottom-0 right-0 w-64 h-64 rounded-full bg-lilac-50 opacity-40"></div>
+  </div>
+
+  <div class="relative max-w-6xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
+    <!-- Text side -->
+    <div class="text-right order-2 lg:order-1">
+      <div class="inline-flex items-center gap-2 bg-lilac-50 text-lilac-700 text-xs font-600 px-3 py-1.5 rounded-full mb-6 border border-lilac-100">
+        <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
+        המדריך המלא למספרות שיער מתולתל בישראל
+      </div>
+      <h1 class="text-4xl lg:text-5xl font-800 leading-tight text-gray-900 mb-5">
+        מצאי את המספרה<br/>
+        שמבינה את<br/>
+        <span class="text-lilac-500">השיער שלך</span>
+      </h1>
+      <p class="text-gray-500 text-lg leading-relaxed mb-8 font-400">
+        תילתול מרכזת את כל המספרות המתמחות בשיער מתולתל בישראל. חפשי לפי שם, עיר או איזור — ומצאי את המעצבת שתבין את הקרלים שלך.
+      </p>
+
+      <!-- Search bar preview -->
+      <div class="flex items-center gap-3 bg-gray-50 border border-gray-200 rounded-2xl px-4 py-3 mb-8 max-w-md">
+        <i data-lucide="search" class="w-4 h-4 text-gray-400 flex-shrink-0"></i>
+        <span class="text-gray-400 text-sm">חפשי עיר, שכונה או שם מספרה...</span>
+      </div>
+
+      <!-- Store buttons -->
+      <div id="download" class="flex flex-wrap gap-3">
+        <a href="#" class="store-btn inline-flex items-center gap-3 bg-gray-900 text-white rounded-2xl px-5 py-3">
+          <i data-lucide="smartphone" class="w-5 h-5"></i>
+          <div class="text-right">
+            <div class="text-xs text-gray-400 leading-none mb-0.5">הורידי ב-</div>
+            <div class="text-sm font-600 leading-none">App Store</div>
+          </div>
+        </a>
+        <a href="#" class="store-btn inline-flex items-center gap-3 bg-gray-900 text-white rounded-2xl px-5 py-3">
+          <i data-lucide="play" class="w-5 h-5"></i>
+          <div class="text-right">
+            <div class="text-xs text-gray-400 leading-none mb-0.5">הורידי ב-</div>
+            <div class="text-sm font-600 leading-none">Google Play</div>
+          </div>
+        </a>
+      </div>
+
+      <!-- Social proof -->
+      <div class="mt-8 flex items-center gap-4 text-sm text-gray-500">
+        <div class="flex -space-x-2 space-x-reverse">
+          <div class="w-8 h-8 rounded-full bg-lilac-200 border-2 border-white flex items-center justify-center text-xs font-600 text-lilac-700">נ</div>
+          <div class="w-8 h-8 rounded-full bg-lilac-300 border-2 border-white flex items-center justify-center text-xs font-600 text-lilac-800">מ</div>
+          <div class="w-8 h-8 rounded-full bg-lilac-400 border-2 border-white flex items-center justify-center text-xs font-600 text-white">ש</div>
+        </div>
+        <span>+2,400 נשים כבר מצאו את המספרה שלהן</span>
+      </div>
+    </div>
+
+    <!-- Phone mockup SVG -->
+    <div class="order-1 lg:order-2 flex justify-center lg:justify-start">
+      <div class="relative w-64 lg:w-72">
+        <svg viewBox="0 0 280 560" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full drop-shadow-2xl">
+          <!-- Phone body -->
+          <rect x="4" y="4" width="272" height="552" rx="36" fill="#1a1a1a"/>
+          <rect x="8" y="8" width="264" height="544" rx="33" fill="#f9f9f9"/>
+
+          <!-- Camera notch -->
+          <rect x="108" y="16" width="64" height="20" rx="10" fill="#1a1a1a"/>
+          <circle cx="140" cy="26" r="4" fill="#2a2a2a"/>
+
+          <!-- Status bar -->
+          <text x="24" y="50" font-family="Heebo, sans-serif" font-size="9" fill="#6b7280">9:41</text>
+          <text x="220" y="50" font-family="Heebo, sans-serif" font-size="9" fill="#6b7280">●●●</text>
+
+          <!-- App header -->
+          <rect x="16" y="58" width="248" height="40" rx="0" fill="#f9f9f9"/>
+          <text x="140" y="82" font-family="Heebo, sans-serif" font-size="13" font-weight="700" fill="#1a1a1a" text-anchor="middle">תילתול</text>
+
+          <!-- Search bar inside phone -->
+          <rect x="20" y="104" width="240" height="34" rx="10" fill="white" stroke="#e5e7eb" stroke-width="1"/>
+          <circle cx="36" cy="121" r="5" fill="none" stroke="#9d7ecb" stroke-width="1.5"/>
+          <line x1="40" y1="125" x2="43" y2="128" stroke="#9d7ecb" stroke-width="1.5" stroke-linecap="round"/>
+          <text x="52" y="125" font-family="Heebo, sans-serif" font-size="9" fill="#9ca3af">חפשי עיר או שם מספרה...</text>
+
+          <!-- Israel map outline (simplified SVG path) -->
+          <!-- Map background -->
+          <rect x="16" y="146" width="248" height="330" rx="4" fill="#ede9f7" opacity="0.3"/>
+
+          <!-- Israel simplified outline -->
+          <path d="
+            M 140 160
+            L 155 165
+            L 170 170
+            L 178 180
+            L 182 195
+            L 185 210
+            L 188 228
+            L 186 245
+            L 190 258
+            L 195 270
+            L 192 285
+            L 185 295
+            L 178 310
+            L 170 325
+            L 162 340
+            L 155 350
+            L 148 360
+            L 142 370
+            L 140 380
+            L 138 370
+            L 132 360
+            L 125 350
+            L 118 340
+            L 110 325
+            L 102 310
+            L 95 295
+            L 88 285
+            L 85 270
+            L 90 258
+            L 94 245
+            L 92 228
+            L 95 210
+            L 98 195
+            L 102 180
+            L 110 170
+            L 125 165
+            Z
+          " fill="#e8e0f5" stroke="#c4b0e8" stroke-width="1.5" stroke-linejoin="round"/>
+
+          <!-- Water (Mediterranean west) -->
+          <path d="M 16 200 L 100 180 L 98 195 L 95 210 L 92 228 L 92 245 L 90 258 L 85 270 L 88 285 L 16 285 Z" fill="#dbeafe" opacity="0.4"/>
+
+          <!-- Dead Sea area -->
+          <ellipse cx="178" cy="290" rx="8" ry="14" fill="#bfdbfe" opacity="0.6"/>
+
+          <!-- City dots -->
+          <!-- Tel Aviv -->
+          <circle cx="102" cy="238" r="6" fill="#9d7ecb" opacity="0.9" class="pulse-dot"/>
+          <!-- Jerusalem -->
+          <circle cx="148" cy="270" r="5.5" fill="#9d7ecb" opacity="0.9"/>
+          <!-- Haifa -->
+          <circle cx="108" cy="192" r="5" fill="#9d7ecb" opacity="0.9"/>
+          <!-- Beer Sheva -->
+          <circle cx="130" cy="330" r="4.5" fill="#9d7ecb" opacity="0.9"/>
+          <!-- Netanya -->
+          <circle cx="100" cy="218" r="4" fill="#b39ddb" opacity="0.8"/>
+          <!-- Ramat Gan -->
+          <circle cx="108" cy="242" r="3.5" fill="#b39ddb" opacity="0.8"/>
+          <!-- Rishon LeZion -->
+          <circle cx="105" cy="252" r="3.5" fill="#b39ddb" opacity="0.8"/>
+          <!-- Ashdod -->
+          <circle cx="98" cy="275" r="4" fill="#b39ddb" opacity="0.8"/>
+          <!-- Petah Tikva -->
+          <circle cx="115" cy="237" r="3.5" fill="#c8b8ef" opacity="0.8"/>
+          <!-- Modiin -->
+          <circle cx="128" cy="255" r="3.5" fill="#c8b8ef" opacity="0.8"/>
+          <!-- Rehovot -->
+          <circle cx="108" cy="260" r="3.5" fill="#c8b8ef" opacity="0.8"/>
+          <!-- Herzliya -->
+          <circle cx="100" cy="228" r="3.5" fill="#c8b8ef" opacity="0.8"/>
+
+          <!-- Tooltip on Tel Aviv dot -->
+          <g class="float-tooltip">
+            <!-- Tooltip bubble -->
+            <rect x="50" y="200" width="130" height="52" rx="10" fill="white" stroke="#e5e7eb" stroke-width="1"/>
+            <!-- Tooltip tail -->
+            <polygon points="102,238 96,252 108,252" fill="white" stroke="#e5e7eb" stroke-width="1"/>
+            <!-- Tooltip content -->
+            <text x="170" y="218" font-family="Heebo, sans-serif" font-size="9" font-weight="700" fill="#1a1a1a" text-anchor="end">מספרת קרלים – תל אביב</text>
+            <!-- Stars -->
+            <text x="170" y="232" font-family="Heebo, sans-serif" font-size="8" fill="#f59e0b" text-anchor="end">★★★★★</text>
+            <text x="68" y="232" font-family="Heebo, sans-serif" font-size="8" fill="#6b7280">5.0 (84 ביקורות)</text>
+            <rect x="60" y="238" width="50" height="10" rx="3" fill="#9d7ecb"/>
+            <text x="85" y="246" font-family="Heebo, sans-serif" font-size="7" fill="white" text-anchor="middle">לפרטים</text>
+          </g>
+
+          <!-- City labels (small) -->
+          <text x="88" y="240" font-family="Heebo, sans-serif" font-size="7.5" fill="#4b5563" text-anchor="middle">תל אביב</text>
+          <text x="155" y="275" font-family="Heebo, sans-serif" font-size="7.5" fill="#4b5563" text-anchor="middle">ירושלים</text>
+          <text x="96" y="189" font-family="Heebo, sans-serif" font-size="7.5" fill="#4b5563" text-anchor="middle">חיפה</text>
+          <text x="130" y="344" font-family="Heebo, sans-serif" font-size="7.5" fill="#4b5563" text-anchor="middle">ב"ש</text>
+
+          <!-- Bottom bar -->
+          <rect x="16" y="480" width="248" height="58" rx="0" fill="white" stroke="#f3f4f6" stroke-width="1"/>
+          <!-- Bottom nav icons -->
+          <g transform="translate(40, 500)">
+            <rect x="-12" y="-10" width="24" height="24" rx="6" fill="#f5f2fc"/>
+            <line x1="0" y1="-4" x2="0" y2="8" stroke="#9d7ecb" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="-5" y1="1" x2="5" y2="1" stroke="#9d7ecb" stroke-width="1.5" stroke-linecap="round"/>
+          </g>
+          <g transform="translate(94, 500)">
+            <circle cx="0" cy="2" r="7" fill="none" stroke="#d1d5db" stroke-width="1.5"/>
+            <line x1="5" y1="7" x2="9" y2="11" stroke="#d1d5db" stroke-width="1.5" stroke-linecap="round"/>
+          </g>
+          <g transform="translate(148, 500)">
+            <circle cx="0" cy="2" r="5" fill="none" stroke="#d1d5db" stroke-width="1.5"/>
+            <circle cx="0" cy="2" r="2" fill="#d1d5db"/>
+          </g>
+          <g transform="translate(202, 500)">
+            <circle cx="0" cy="0" r="6" fill="none" stroke="#d1d5db" stroke-width="1.5"/>
+            <line x1="-3" y1="0" x2="3" y2="0" stroke="#d1d5db" stroke-width="1.5"/>
+            <line x1="0" y1="-3" x2="0" y2="3" stroke="#d1d5db" stroke-width="1.5"/>
+          </g>
+
+          <!-- Home indicator -->
+          <rect x="110" y="548" width="60" height="4" rx="2" fill="#d1d5db"/>
+
+          <!-- Phone frame border -->
+          <rect x="4" y="4" width="272" height="552" rx="36" fill="none" stroke="#1a1a1a" stroke-width="8"/>
+          <!-- Side button -->
+          <rect x="272" y="160" width="8" height="40" rx="4" fill="#2a2a2a"/>
+          <!-- Volume buttons -->
+          <rect x="0" y="140" width="8" height="28" rx="4" fill="#2a2a2a"/>
+          <rect x="0" y="178" width="8" height="28" rx="4" fill="#2a2a2a"/>
+        </svg>
+
+        <!-- Floating stats card -->
+        <div class="absolute -bottom-4 -right-6 bg-white border border-gray-100 rounded-2xl shadow-lg px-4 py-3 text-right float-tooltip" style="animation-delay:1s">
+          <div class="text-xs text-gray-400 mb-0.5">מספרות רשומות</div>
+          <div class="text-xl font-700 text-gray-900">340+</div>
+          <div class="text-xs text-lilac-500 font-500">בכל הארץ</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     HOW IT WORKS
+════════════════════════════════════════════ -->
+<section id="how" class="bg-gray-50 py-20 lg:py-28">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="text-center mb-16 fade-up">
+      <p class="text-lilac-500 text-sm font-600 uppercase tracking-widest mb-3">איך זה עובד</p>
+      <h2 class="text-3xl lg:text-4xl font-800 text-gray-900">שלושה צעדים פשוטים</h2>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-8 relative">
+      <!-- Connector line -->
+      <div class="hidden md:block absolute top-10 right-1/6 left-1/6 h-px bg-gray-200 z-0"></div>
+
+      <!-- Step 1 -->
+      <div class="fade-up fade-up-delay-1 relative text-center">
+        <div class="w-16 h-16 rounded-2xl bg-lilac-50 border border-lilac-100 flex items-center justify-center mx-auto mb-5 relative z-10">
+          <i data-lucide="map-pin" class="w-7 h-7 text-lilac-500"></i>
+        </div>
+        <div class="w-6 h-6 rounded-full bg-lilac-400 text-white text-xs font-700 flex items-center justify-center mx-auto -mt-3 mb-4 relative z-10">1</div>
+        <h3 class="text-lg font-700 text-gray-900 mb-2">חפשי לפי מיקום</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">הזיני עיר, שכונה או איזור גיאוגרפי וקבלי רשימת מספרות מתמחות בשיער מתולתל בקרבתך.</p>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="fade-up fade-up-delay-2 relative text-center">
+        <div class="w-16 h-16 rounded-2xl bg-lilac-50 border border-lilac-100 flex items-center justify-center mx-auto mb-5 relative z-10">
+          <i data-lucide="list-filter" class="w-7 h-7 text-lilac-500"></i>
+        </div>
+        <div class="w-6 h-6 rounded-full bg-lilac-400 text-white text-xs font-700 flex items-center justify-center mx-auto -mt-3 mb-4 relative z-10">2</div>
+        <h3 class="text-lg font-700 text-gray-900 mb-2">עיינו בפרופילים</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">קראי ביקורות, צפי בתמונות עבודות, ובדקי מי מתמחה בשיטת ה-Curly Girl או בטיפולים ספציפיים.</p>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="fade-up fade-up-delay-3 relative text-center">
+        <div class="w-16 h-16 rounded-2xl bg-lilac-50 border border-lilac-100 flex items-center justify-center mx-auto mb-5 relative z-10">
+          <i data-lucide="calendar-check" class="w-7 h-7 text-lilac-500"></i>
+        </div>
+        <div class="w-6 h-6 rounded-full bg-lilac-400 text-white text-xs font-700 flex items-center justify-center mx-auto -mt-3 mb-4 relative z-10">3</div>
+        <h3 class="text-lg font-700 text-gray-900 mb-2">קבעי תור</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">צרי קשר עם המספרה ישירות דרך האפליקציה וקבלי תזכורת אוטומטית לפני התור.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     FEATURES
+════════════════════════════════════════════ -->
+<section id="features" class="bg-white py-20 lg:py-28">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="text-center mb-16 fade-up">
+      <p class="text-lilac-500 text-sm font-600 uppercase tracking-widest mb-3">יתרונות</p>
+      <h2 class="text-3xl lg:text-4xl font-800 text-gray-900">הכל במקום אחד</h2>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Feature 1 -->
+      <div class="fade-up card-hover bg-gray-50 border border-gray-100 rounded-2xl p-6">
+        <div class="w-11 h-11 rounded-xl bg-lilac-50 border border-lilac-100 flex items-center justify-center mb-4">
+          <i data-lucide="search" class="w-5 h-5 text-lilac-500"></i>
+        </div>
+        <h3 class="text-base font-700 text-gray-900 mb-2">חיפוש מתקדם</h3>
+        <p class="text-sm text-gray-500 leading-relaxed">חפשי לפי שם מספרה, עיר, שכונה, מחיר, ושיטת טיפול.</p>
+      </div>
+
+      <!-- Feature 2 -->
+      <div class="fade-up fade-up-delay-1 card-hover bg-gray-50 border border-gray-100 rounded-2xl p-6">
+        <div class="w-11 h-11 rounded-xl bg-lilac-50 border border-lilac-100 flex items-center justify-center mb-4">
+          <i data-lucide="map" class="w-5 h-5 text-lilac-500"></i>
+        </div>
+        <h3 class="text-base font-700 text-gray-900 mb-2">מפה אינטראקטיבית</h3>
+        <p class="text-sm text-gray-500 leading-relaxed">ראי ויזואלית איפה כל המספרות נמצאות ברחבי ישראל.</p>
+      </div>
+
+      <!-- Feature 3 -->
+      <div class="fade-up fade-up-delay-2 card-hover bg-gray-50 border border-gray-100 rounded-2xl p-6">
+        <div class="w-11 h-11 rounded-xl bg-lilac-50 border border-lilac-100 flex items-center justify-center mb-4">
+          <i data-lucide="badge-check" class="w-5 h-5 text-lilac-500"></i>
+        </div>
+        <h3 class="text-base font-700 text-gray-900 mb-2">מספרות מאומתות</h3>
+        <p class="text-sm text-gray-500 leading-relaxed">כל מספרה ברשימה עברה אימות כמתמחה בשיער מתולתל.</p>
+      </div>
+
+      <!-- Feature 4 -->
+      <div class="fade-up card-hover bg-gray-50 border border-gray-100 rounded-2xl p-6">
+        <div class="w-11 h-11 rounded-xl bg-lilac-50 border border-lilac-100 flex items-center justify-center mb-4">
+          <i data-lucide="star" class="w-5 h-5 text-lilac-500"></i>
+        </div>
+        <h3 class="text-base font-700 text-gray-900 mb-2">ביקורות אמיתיות</h3>
+        <p class="text-sm text-gray-500 leading-relaxed">ביקורות מנשים עם שיער מתולתל — מהקהילה, בשביל הקהילה.</p>
+      </div>
+
+      <!-- Feature 5 -->
+      <div class="fade-up fade-up-delay-1 card-hover bg-gray-50 border border-gray-100 rounded-2xl p-6">
+        <div class="w-11 h-11 rounded-xl bg-lilac-50 border border-lilac-100 flex items-center justify-center mb-4">
+          <i data-lucide="bell" class="w-5 h-5 text-lilac-500"></i>
+        </div>
+        <h3 class="text-base font-700 text-gray-900 mb-2">תזכורות תור</h3>
+        <p class="text-sm text-gray-500 leading-relaxed">קבלי תזכורת אוטומטית לפני כל תור — לא תשכחי יותר.</p>
+      </div>
+
+      <!-- Feature 6 -->
+      <div class="fade-up fade-up-delay-2 card-hover bg-gray-50 border border-gray-100 rounded-2xl p-6">
+        <div class="w-11 h-11 rounded-xl bg-lilac-50 border border-lilac-100 flex items-center justify-center mb-4">
+          <i data-lucide="heart" class="w-5 h-5 text-lilac-500"></i>
+        </div>
+        <h3 class="text-base font-700 text-gray-900 mb-2">שמירת מועדפות</h3>
+        <p class="text-sm text-gray-500 leading-relaxed">שמרי את המספרות האהובות עלייך ועקבי אחרי עדכונים.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     TESTIMONIALS
+════════════════════════════════════════════ -->
+<section id="testimonials" class="bg-gray-50 py-20 lg:py-28">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="text-center mb-16 fade-up">
+      <p class="text-lilac-500 text-sm font-600 uppercase tracking-widest mb-3">המלצות</p>
+      <h2 class="text-3xl lg:text-4xl font-800 text-gray-900">מה אומרות הנשים שלנו</h2>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6">
+      <!-- Testimonial 1 -->
+      <div class="fade-up card-hover bg-white border border-gray-100 rounded-2xl p-6">
+        <div class="flex items-center gap-1 mb-4">
+          <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+          <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+          <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+          <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+          <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+        </div>
+        <p class="text-gray-700 text-sm leading-relaxed mb-5">"סוף סוף מצאתי מעצבת שבאמת מבינה את הקרלים שלי. כבר שנתיים אני הולכת אליה בזכות תילתול. שינה לי את החיים."</p>
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-full bg-lilac-200 flex items-center justify-center text-sm font-700 text-lilac-700">נ</div>
+          <div>
+            <div class="text-sm font-600 text-gray-900">נועה כהן</div>
+            <div class="text-xs text-gray-400">תל אביב</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Testimonial 2 -->
+      <div class="fade-up fade-up-delay-1 card-hover bg-white border border-gray-100 rounded-2xl p-6">
+        <div class="flex items-center gap-1 mb-4">
+          <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+          <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+          <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+          <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+          <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+        </div>
+        <p class="text-gray-700 text-sm leading-relaxed mb-5">"עברתי לירושלים ולא ידעתי לאן ללכת. בתוך דקה מצאתי שלוש מספרות מעולות ליד הבית. האפליקציה פשוט עובדת."</p>
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-full bg-lilac-300 flex items-center justify-center text-sm font-700 text-lilac-800">מ</div>
+          <div>
+            <div class="text-sm font-600 text-gray-900">מיה אברהם</div>
+            <div class="text-xs text-gray-400">ירושלים</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Testimonial 3 -->
+      <div class="fade-up fade-up-delay-2 card-hover bg-white border border-gray-100 rounded-2xl p-6">
+        <div class="flex items-center gap-1 mb-4">
+          <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+          <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+          <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+          <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+          <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+        </div>
+        <p class="text-gray-700 text-sm leading-relaxed mb-5">"הביקורות כאן הרבה יותר מהימנות מאשר ב-Google. נשים שמבינות שיער מתולתל כותבות ביקורות לנשים שמבינות שיער מתולתל."</p>
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-full bg-lilac-400 flex items-center justify-center text-sm font-700 text-white">ש</div>
+          <div>
+            <div class="text-sm font-600 text-gray-900">שירה לוי</div>
+            <div class="text-xs text-gray-400">חיפה</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     CTA BANNER
+════════════════════════════════════════════ -->
+<section class="bg-lilac-400 py-16">
+  <div class="max-w-2xl mx-auto px-6 text-center fade-up">
+    <h2 class="text-2xl lg:text-3xl font-800 text-white mb-3">מוכנה למצוא את המספרה שלך?</h2>
+    <p class="text-lilac-100 mb-8 text-base">הורידי את האפליקציה ומצאי את המספרה המושלמת לשיער המתולתל שלך.</p>
+    <div class="flex flex-wrap justify-center gap-4">
+      <a href="#" class="inline-flex items-center gap-3 bg-white text-gray-900 rounded-2xl px-6 py-3.5 store-btn hover:bg-gray-100">
+        <i data-lucide="smartphone" class="w-5 h-5"></i>
+        <div class="text-right">
+          <div class="text-xs text-gray-400 leading-none mb-0.5">הורידי ב-</div>
+          <div class="text-sm font-700 leading-none">App Store</div>
+        </div>
+      </a>
+      <a href="#" class="inline-flex items-center gap-3 bg-white text-gray-900 rounded-2xl px-6 py-3.5 store-btn hover:bg-gray-100">
+        <i data-lucide="play" class="w-5 h-5"></i>
+        <div class="text-right">
+          <div class="text-xs text-gray-400 leading-none mb-0.5">הורידי ב-</div>
+          <div class="text-sm font-700 leading-none">Google Play</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════ -->
+<footer class="bg-white border-t border-gray-100 py-12">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="grid md:grid-cols-4 gap-8 mb-10">
+      <!-- Brand -->
+      <div class="md:col-span-2">
+        <div class="flex items-center gap-2 mb-4">
+          <div class="w-8 h-8 rounded-xl bg-lilac-400 flex items-center justify-center">
+            <i data-lucide="scissors" class="w-4 h-4 text-white"></i>
+          </div>
+          <span class="text-lg font-700 text-gray-900">תילתול</span>
+        </div>
+        <p class="text-sm text-gray-500 leading-relaxed max-w-xs">המדריך המלא למספרות שיער מתולתל בישראל. מהקהילה, בשביל הקהילה.</p>
+        <div class="flex items-center gap-3 mt-5">
+          <a href="#" class="w-9 h-9 rounded-xl bg-gray-100 hover:bg-lilac-50 hover:text-lilac-600 flex items-center justify-center transition-colors">
+            <i data-lucide="instagram" class="w-4 h-4 text-gray-600"></i>
+          </a>
+          <a href="#" class="w-9 h-9 rounded-xl bg-gray-100 hover:bg-lilac-50 hover:text-lilac-600 flex items-center justify-center transition-colors">
+            <i data-lucide="facebook" class="w-4 h-4 text-gray-600"></i>
+          </a>
+          <a href="#" class="w-9 h-9 rounded-xl bg-gray-100 hover:bg-lilac-50 hover:text-lilac-600 flex items-center justify-center transition-colors">
+            <i data-lucide="mail" class="w-4 h-4 text-gray-600"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Links 1 -->
+      <div>
+        <h4 class="text-sm font-700 text-gray-900 mb-4">אפליקציה</h4>
+        <ul class="space-y-2 text-sm text-gray-500">
+          <li><a href="#how" class="hover:text-lilac-500 transition-colors">איך זה עובד</a></li>
+          <li><a href="#features" class="hover:text-lilac-500 transition-colors">יתרונות</a></li>
+          <li><a href="#" class="hover:text-lilac-500 transition-colors">להוסיף מספרה</a></li>
+          <li><a href="#" class="hover:text-lilac-500 transition-colors">הורדה</a></li>
+        </ul>
+      </div>
+
+      <!-- Links 2 -->
+      <div>
+        <h4 class="text-sm font-700 text-gray-900 mb-4">כללי</h4>
+        <ul class="space-y-2 text-sm text-gray-500">
+          <li><a href="#" class="hover:text-lilac-500 transition-colors">אודות</a></li>
+          <li><a href="#" class="hover:text-lilac-500 transition-colors">צרי קשר</a></li>
+          <li><a href="#" class="hover:text-lilac-500 transition-colors">פרטיות</a></li>
+          <li><a href="#" class="hover:text-lilac-500 transition-colors">תנאי שימוש</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="border-t border-gray-100 pt-6 flex flex-col md:flex-row items-center justify-between gap-3">
+      <p class="text-xs text-gray-400">© 2025 תילתול. כל הזכויות שמורות.</p>
+      <p class="text-xs text-gray-400">עשוי עם <i data-lucide="heart" class="w-3 h-3 inline text-lilac-400"></i> לכל בעלות השיער המתולתל בישראל</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Init Lucide icons
+  lucide.createIcons();
+
+  // Mobile menu toggle
+  function toggleMenu() {
+    const menu = document.getElementById('mobile-menu');
+    menu.classList.toggle('hidden');
+  }
+
+  // Close mobile menu when nav link clicked
+  document.querySelectorAll('#mobile-menu a').forEach(link => {
+    link.addEventListener('click', () => {
+      document.getElementById('mobile-menu').classList.add('hidden');
+    });
+  });
+
+  // IntersectionObserver for fade-up animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
