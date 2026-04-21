@@ -8,6 +8,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
   <script>
@@ -114,6 +116,39 @@
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: #f9f9f9; }
     ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 3px; }
+
+    /* Leaflet map */
+    #map { height: 420px; border-radius: 16px; border: 1px solid #e5e7eb; z-index: 0; }
+    .leaflet-container { font-family: 'Heebo', sans-serif; }
+
+    /* Custom map marker */
+    .salon-marker {
+      width: 14px; height: 14px;
+      background: #9d7ecb;
+      border: 2px solid #fff;
+      border-radius: 50%;
+      box-shadow: 0 2px 6px rgba(157,126,203,0.5);
+      transition: transform 0.15s ease;
+      cursor: pointer;
+    }
+    .salon-marker:hover, .salon-marker.active { transform: scale(1.5); background: #7550a0; }
+
+    /* Leaflet popup */
+    .leaflet-popup-content-wrapper {
+      border-radius: 14px !important;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1) !important;
+      font-family: 'Heebo', sans-serif;
+      direction: rtl;
+    }
+    .leaflet-popup-content { margin: 14px 16px; min-width: 160px; }
+    .leaflet-popup-tip-container { margin-top: -1px; }
+
+    /* Search input */
+    #main-search:focus { outline: none; border-color: #b39ddb; box-shadow: 0 0 0 3px rgba(179,157,219,0.15); }
+
+    /* Salon result card */
+    .salon-card { transition: box-shadow 0.2s ease, transform 0.2s ease; }
+    .salon-card:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.08); transform: translateY(-2px); }
   </style>
 </head>
 <body class="bg-white text-gray-900 antialiased">
@@ -133,6 +168,7 @@
 
     <!-- Desktop Nav -->
     <nav class="hidden md:flex items-center gap-8 text-sm text-gray-600 font-500">
+      <a href="#search" class="nav-link hover:text-gray-900 transition-colors">חיפוש מספרות</a>
       <a href="#how" class="nav-link hover:text-gray-900 transition-colors">איך זה עובד</a>
       <a href="#features" class="nav-link hover:text-gray-900 transition-colors">יתרונות</a>
       <a href="#testimonials" class="nav-link hover:text-gray-900 transition-colors">המלצות</a>
@@ -185,11 +221,11 @@
         תילתול מרכזת את כל המספרות המתמחות בשיער מתולתל בישראל. חפשי לפי שם, עיר או איזור — ומצאי את המעצבת שתבין את התלתלים שלך.
       </p>
 
-      <!-- Search bar preview -->
-      <div class="flex items-center gap-3 bg-gray-50 border border-gray-200 rounded-2xl px-4 py-3 mb-8 max-w-md">
+      <!-- Search bar — clicks to search section -->
+      <button onclick="focusSearch()" class="flex items-center gap-3 bg-gray-50 border border-gray-200 hover:border-lilac-300 rounded-2xl px-4 py-3 mb-8 max-w-md w-full text-right transition-colors cursor-text">
         <i data-lucide="search" class="w-4 h-4 text-gray-400 flex-shrink-0"></i>
         <span class="text-gray-400 text-sm">חפשי עיר, שכונה או שם מספרה...</span>
-      </div>
+      </button>
 
       <!-- Store buttons -->
       <div id="download" class="flex flex-wrap gap-3">
@@ -437,6 +473,54 @@
 </section>
 
 <!-- ═══════════════════════════════════════════
+     SEARCH + MAP
+════════════════════════════════════════════ -->
+<section id="search" class="bg-white py-20 lg:py-28 border-t border-gray-100">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="text-center mb-10 fade-up">
+      <p class="text-lilac-500 text-sm font-600 uppercase tracking-widest mb-3">מצאי מספרה</p>
+      <h2 class="text-3xl lg:text-4xl font-800 text-gray-900">חפשי לפי שם או עיר</h2>
+    </div>
+
+    <!-- Search input -->
+    <div class="max-w-xl mx-auto mb-8 fade-up">
+      <div class="relative">
+        <i data-lucide="search" class="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none"></i>
+        <input
+          id="main-search"
+          type="text"
+          placeholder="חפשי עיר, שכונה או שם מספרה..."
+          class="w-full bg-gray-50 border border-gray-200 rounded-2xl pr-11 pl-4 py-3.5 text-sm text-gray-900 placeholder-gray-400 transition-all"
+          oninput="handleSearch(this.value)"
+        />
+        <button id="clear-btn" onclick="clearSearch()" class="hidden absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Map -->
+    <div id="map" class="mb-6 fade-up"></div>
+
+    <!-- Results header -->
+    <div class="flex items-center justify-between mb-4">
+      <p id="results-count" class="text-sm text-gray-500"></p>
+    </div>
+
+    <!-- Results grid -->
+    <div id="results-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+
+    <!-- No results -->
+    <div id="no-results" class="hidden text-center py-16">
+      <div class="w-14 h-14 rounded-2xl bg-gray-50 flex items-center justify-center mx-auto mb-4">
+        <i data-lucide="search-x" class="w-6 h-6 text-gray-300"></i>
+      </div>
+      <p class="text-gray-400 text-sm">לא נמצאו מספרות התואמות את החיפוש</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
      FEATURES
 ════════════════════════════════════════════ -->
 <section id="features" class="bg-white py-20 lg:py-28">
@@ -660,23 +744,167 @@
 </footer>
 
 <script>
-  // Init Lucide icons
-  lucide.createIcons();
+  // ── Salon dataset ─────────────────────────────────────────────
+  const SALONS = [
+    { name: 'מספרת תלתלים',      city: 'תל אביב',      address: 'דיזנגוף 45',         lat: 32.0813, lng: 34.7738, rating: 4.9, reviews: 84 },
+    { name: 'סטודיו קרל',         city: 'ירושלים',      address: 'יפו 112',             lat: 31.7883, lng: 35.2037, rating: 4.8, reviews: 61 },
+    { name: 'תלתל חיפה',          city: 'חיפה',         address: 'הרצל 78',             lat: 32.8184, lng: 34.9896, rating: 4.7, reviews: 49 },
+    { name: 'טבעי ומתולתל',       city: 'נתניה',        address: 'הרצל 32',             lat: 32.3226, lng: 34.8532, rating: 4.8, reviews: 37 },
+    { name: 'מספרת שורשים',       city: 'רחובות',       address: 'הרצל 14',             lat: 31.8928, lng: 34.8113, rating: 4.6, reviews: 28 },
+    { name: 'קרלס סטייל',         city: 'פתח תקווה',    address: 'רוטשילד 5',           lat: 32.0878, lng: 34.8878, rating: 4.7, reviews: 53 },
+    { name: 'מספרת גלים',         city: 'אשדוד',        address: 'העצמאות 21',          lat: 31.8044, lng: 34.6553, rating: 4.5, reviews: 32 },
+    { name: 'סטודיו מגנוליה',     city: 'הרצליה',       address: 'בן גוריון 9',         lat: 32.1663, lng: 34.8431, rating: 4.9, reviews: 72 },
+    { name: 'מספרת דנה',          city: 'רמת גן',       address: 'ביאליק 3',            lat: 32.0680, lng: 34.8235, rating: 4.6, reviews: 41 },
+    { name: 'שיער חופשי',         city: 'מודיעין',      address: 'עמק האלה 7',          lat: 31.8969, lng: 35.0095, rating: 4.7, reviews: 29 },
+    { name: 'מספרת ספיר',         city: 'באר שבע',      address: 'רגר 44',              lat: 31.2518, lng: 34.7913, rating: 4.5, reviews: 22 },
+    { name: 'תלתלית',             city: 'ראשון לציון',  address: 'רוטשילד 88',          lat: 31.9730, lng: 34.7925, rating: 4.8, reviews: 65 },
+    { name: 'קרלי גרל',           city: 'כפר סבא',      address: 'ויצמן 12',            lat: 32.1784, lng: 34.9079, rating: 4.6, reviews: 34 },
+    { name: 'מספרת נועה',         city: 'הוד השרון',    address: 'הדקל 6',              lat: 32.1506, lng: 34.8965, rating: 4.7, reviews: 26 },
+    { name: 'טבעי',               city: 'רעננה',        address: 'אחוזה 77',            lat: 32.1836, lng: 34.8706, rating: 4.8, reviews: 58 },
+    { name: 'מספרת הים',          city: 'תל אביב',      address: 'בן יהודה 120',        lat: 32.0750, lng: 34.7700, rating: 4.7, reviews: 91 },
+    { name: 'קרלסטייל',           city: 'חדרה',         address: 'גבעת אולגה 3',        lat: 32.4340, lng: 34.9190, rating: 4.5, reviews: 19 },
+    { name: 'גלים ותלתלים',       city: 'נהריה',        address: 'געתון 14',            lat: 33.0048, lng: 35.0985, rating: 4.6, reviews: 17 },
+    { name: 'מספרת ענבל',         city: 'אילת',         address: 'התמר 5',              lat: 29.5569, lng: 34.9513, rating: 4.4, reviews: 14 },
+    { name: 'סטודיו אורכידאה',    city: 'ירושלים',      address: 'עמק רפאים 34',        lat: 31.7600, lng: 35.2180, rating: 4.9, reviews: 77 },
+    { name: 'מספרת לוטוס',        city: 'תל אביב',      address: 'שינקין 22',           lat: 32.0620, lng: 34.7720, rating: 4.8, reviews: 103 },
+    { name: 'תלתל בצפון',         city: 'עכו',          address: 'בן עמי 8',            lat: 32.9242, lng: 35.0722, rating: 4.5, reviews: 21 },
+  ];
 
-  // Mobile menu toggle
-  function toggleMenu() {
-    const menu = document.getElementById('mobile-menu');
-    menu.classList.toggle('hidden');
+  // ── Leaflet map ───────────────────────────────────────────────
+  const map = L.map('map', { zoomControl: true }).setView([31.8, 34.95], 7);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    maxZoom: 18,
+  }).addTo(map);
+
+  function makeIcon(active) {
+    return L.divIcon({
+      className: '',
+      html: `<div class="salon-marker${active ? ' active' : ''}"></div>`,
+      iconSize: [14, 14],
+      iconAnchor: [7, 7],
+      popupAnchor: [0, -10],
+    });
   }
 
-  // Close mobile menu when nav link clicked
+  const markers = SALONS.map(s => {
+    const marker = L.marker([s.lat, s.lng], { icon: makeIcon(false) }).addTo(map);
+    marker.bindPopup(`
+      <div style="direction:rtl;font-family:'Heebo',sans-serif">
+        <div style="font-weight:700;font-size:13px;margin-bottom:2px">${s.name}</div>
+        <div style="font-size:11px;color:#6b7280;margin-bottom:4px">${s.city} · ${s.address}</div>
+        <div style="font-size:11px;color:#f59e0b">★ ${s.rating} <span style="color:#9ca3af">(${s.reviews} ביקורות)</span></div>
+      </div>
+    `, { maxWidth: 200 });
+    marker._salonData = s;
+    return marker;
+  });
+
+  // ── Render salon cards ────────────────────────────────────────
+  function renderCards(list) {
+    const grid = document.getElementById('results-grid');
+    const noResults = document.getElementById('no-results');
+    const count = document.getElementById('results-count');
+
+    grid.innerHTML = '';
+    if (list.length === 0) {
+      noResults.classList.remove('hidden');
+      count.textContent = '';
+      return;
+    }
+    noResults.classList.add('hidden');
+    count.textContent = `${list.length} מספרות נמצאו`;
+
+    list.forEach(s => {
+      const stars = '★'.repeat(Math.round(s.rating)) + '☆'.repeat(5 - Math.round(s.rating));
+      const card = document.createElement('div');
+      card.className = 'salon-card bg-gray-50 border border-gray-100 rounded-2xl p-5 cursor-pointer';
+      card.innerHTML = `
+        <div class="flex items-start justify-between mb-3">
+          <div class="w-10 h-10 rounded-xl bg-lilac-50 border border-lilac-100 flex items-center justify-center flex-shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9d7ecb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 7c-3 0-4 3-4 5 0 2.9 1.5 5 4 5 1.5 0 2.5-.5 3-1.5"/><path d="M6 13h8"/><path d="M15 7c3 0 4 3 4 5"/><path d="M12 7v10"/><circle cx="9" cy="7" r="1"/><circle cx="15" cy="7" r="1"/></svg>
+          </div>
+          <div class="text-right flex-1 mr-3">
+            <div class="font-700 text-gray-900 text-sm leading-tight">${s.name}</div>
+            <div class="text-xs text-gray-400 mt-0.5">${s.city} · ${s.address}</div>
+          </div>
+        </div>
+        <div class="flex items-center justify-between">
+          <span class="text-xs text-gray-400">${s.reviews} ביקורות</span>
+          <span class="text-amber-400 text-sm font-600">${s.rating} <span class="text-xs text-amber-300">${stars}</span></span>
+        </div>
+      `;
+      card.addEventListener('click', () => {
+        const m = markers.find(mk => mk._salonData === s);
+        if (m) { map.setView([s.lat, s.lng], 13); m.openPopup(); }
+        document.getElementById('search').scrollIntoView({ behavior: 'smooth' });
+      });
+      grid.appendChild(card);
+    });
+
+    lucide.createIcons();
+  }
+
+  // ── Search logic ──────────────────────────────────────────────
+  let currentQuery = '';
+
+  function handleSearch(q) {
+    currentQuery = q.trim().toLowerCase();
+    document.getElementById('clear-btn').classList.toggle('hidden', !currentQuery);
+
+    const filtered = SALONS.filter(s =>
+      s.name.includes(currentQuery) ||
+      s.city.includes(currentQuery) ||
+      s.address.includes(currentQuery)
+    );
+
+    // Update markers visibility
+    markers.forEach(m => {
+      const match = filtered.includes(m._salonData);
+      if (match) {
+        if (!map.hasLayer(m)) m.addTo(map);
+      } else {
+        if (map.hasLayer(m)) map.removeLayer(m);
+      }
+    });
+
+    // Fit map to visible markers
+    if (filtered.length > 0) {
+      const group = L.featureGroup(markers.filter(m => filtered.includes(m._salonData)));
+      map.fitBounds(group.getBounds().pad(0.2));
+    } else {
+      map.setView([31.8, 34.95], 7);
+    }
+
+    renderCards(filtered);
+  }
+
+  function clearSearch() {
+    document.getElementById('main-search').value = '';
+    handleSearch('');
+    document.getElementById('main-search').focus();
+  }
+
+  function focusSearch() {
+    document.getElementById('search').scrollIntoView({ behavior: 'smooth' });
+    setTimeout(() => document.getElementById('main-search').focus(), 400);
+  }
+
+  // ── Init ──────────────────────────────────────────────────────
+  lucide.createIcons();
+  renderCards(SALONS);
+
+  function toggleMenu() {
+    document.getElementById('mobile-menu').classList.toggle('hidden');
+  }
+
   document.querySelectorAll('#mobile-menu a').forEach(link => {
     link.addEventListener('click', () => {
       document.getElementById('mobile-menu').classList.add('hidden');
     });
   });
 
-  // IntersectionObserver for fade-up animations
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
