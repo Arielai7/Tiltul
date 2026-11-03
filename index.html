@@ -19,6 +19,7 @@
           fontFamily: { heebo: ['Heebo', 'sans-serif'] },
           colors: {
             lilac: {
+              25:  '#fdf9ff',
               50:  '#f5f2fc',
               100: '#ede8f9',
               200: '#ddd4f5',
@@ -151,12 +152,12 @@
     .salon-card:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.08); transform: translateY(-2px); }
   </style>
 </head>
-<body class="bg-white text-gray-900 antialiased">
+<body class="bg-lilac-25 text-gray-900 antialiased">
 
 <!-- ═══════════════════════════════════════════
      NAVBAR
 ════════════════════════════════════════════ -->
-<header class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-gray-100">
+<header class="sticky top-0 z-50 bg-lilac-25/90 backdrop-blur border-b border-lilac-100">
   <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
     <!-- Logo -->
     <a href="#" class="flex items-center gap-2 group">
@@ -171,14 +172,8 @@
       <a href="#search" class="nav-link hover:text-gray-900 transition-colors">חיפוש מספרות</a>
       <a href="#how" class="nav-link hover:text-gray-900 transition-colors">איך זה עובד</a>
       <a href="#features" class="nav-link hover:text-gray-900 transition-colors">יתרונות</a>
-      <a href="#testimonials" class="nav-link hover:text-gray-900 transition-colors">המלצות</a>
     </nav>
 
-    <!-- CTA -->
-    <a href="#download" class="hidden md:inline-flex items-center gap-2 bg-lilac-400 hover:bg-lilac-500 text-white text-sm font-600 px-4 py-2 rounded-xl transition-colors">
-      <i data-lucide="download" class="w-4 h-4"></i>
-      הורידי את האפליקציה
-    </a>
 
     <!-- Mobile menu icon -->
     <button class="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors" onclick="toggleMenu()">
@@ -187,295 +182,54 @@
   </div>
 
   <!-- Mobile menu -->
-  <div id="mobile-menu" class="hidden md:hidden border-t border-gray-100 bg-white px-6 py-4 space-y-3">
+  <div id="mobile-menu" class="hidden md:hidden border-t border-lilac-100 bg-lilac-25 px-6 py-4 space-y-3">
     <a href="#how" class="block text-sm text-gray-600 py-1">איך זה עובד</a>
     <a href="#features" class="block text-sm text-gray-600 py-1">יתרונות</a>
-    <a href="#testimonials" class="block text-sm text-gray-600 py-1">המלצות</a>
-    <a href="#download" class="inline-flex items-center gap-2 bg-lilac-400 text-white text-sm font-600 px-4 py-2 rounded-xl mt-2">הורידי את האפליקציה</a>
+    <a href="#search" class="inline-flex items-center gap-2 bg-lilac-400 text-white text-sm font-600 px-4 py-2 rounded-xl mt-2">מצאי מספרה</a>
   </div>
 </header>
 
 <!-- ═══════════════════════════════════════════
      HERO
 ════════════════════════════════════════════ -->
-<section class="relative overflow-hidden bg-white pt-16 pb-20 lg:pt-24 lg:pb-32">
-  <!-- Subtle bg shape -->
-  <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
-    <div class="absolute -top-32 -left-32 w-96 h-96 rounded-full bg-lilac-50 opacity-60"></div>
-    <div class="absolute bottom-0 right-0 w-64 h-64 rounded-full bg-lilac-50 opacity-40"></div>
-  </div>
+<section class="relative overflow-hidden" style="min-height:600px; display:flex; align-items:center; background:url('Hero4.png') center center / cover no-repeat;">
 
-  <div class="relative max-w-6xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
-    <!-- Text side -->
-    <div class="text-right order-2 lg:order-1">
-      <div class="inline-flex items-center gap-2 bg-lilac-50 text-lilac-700 text-xs font-600 px-3 py-1.5 rounded-full mb-6 border border-lilac-100">
-        <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
-        המדריך המלא למספרות שיער מתולתל בישראל
-      </div>
-      <h1 class="text-4xl lg:text-5xl font-800 leading-tight text-gray-900 mb-5">
-        מצאי את המספרה<br/>
-        שמבינה את<br/>
-        <span class="text-lilac-500">התלתלים שלך</span>
-      </h1>
-      <p class="text-gray-500 text-lg leading-relaxed mb-8 font-400">
-        תילתול מרכזת את כל המספרות המתמחות בשיער מתולתל בישראל. חפשי לפי שם, עיר או איזור — ומצאי את המעצבת שתבין את התלתלים שלך.
-      </p>
-
-      <!-- Search bar — clicks to search section -->
-      <button onclick="focusSearch()" class="flex items-center gap-3 bg-gray-50 border border-gray-200 hover:border-lilac-300 rounded-2xl px-4 py-3 mb-8 max-w-md w-full text-right transition-colors cursor-text">
-        <i data-lucide="search" class="w-4 h-4 text-gray-400 flex-shrink-0"></i>
-        <span class="text-gray-400 text-sm">חפשי עיר, שכונה או שם מספרה...</span>
-      </button>
-
-      <!-- Store buttons -->
-      <div id="download" class="flex flex-wrap gap-3">
-        <a href="#" class="store-btn inline-flex items-center gap-3 bg-gray-900 text-white rounded-2xl px-5 py-3">
-          <i data-lucide="smartphone" class="w-5 h-5"></i>
-          <div class="text-right">
-            <div class="text-xs text-gray-400 leading-none mb-0.5">הורידי ב-</div>
-            <div class="text-sm font-600 leading-none">App Store</div>
-          </div>
-        </a>
-        <a href="#" class="store-btn inline-flex items-center gap-3 bg-gray-900 text-white rounded-2xl px-5 py-3">
-          <i data-lucide="play" class="w-5 h-5"></i>
-          <div class="text-right">
-            <div class="text-xs text-gray-400 leading-none mb-0.5">הורידי ב-</div>
-            <div class="text-sm font-600 leading-none">Google Play</div>
-          </div>
-        </a>
-      </div>
-
-      <!-- Social proof -->
-      <div class="mt-8 flex items-center gap-4 text-sm text-gray-500">
-        <div class="flex -space-x-2 space-x-reverse">
-          <div class="w-8 h-8 rounded-full bg-lilac-200 border-2 border-white flex items-center justify-center text-xs font-600 text-lilac-700">נ</div>
-          <div class="w-8 h-8 rounded-full bg-lilac-300 border-2 border-white flex items-center justify-center text-xs font-600 text-lilac-800">מ</div>
-          <div class="w-8 h-8 rounded-full bg-lilac-400 border-2 border-white flex items-center justify-center text-xs font-600 text-white">ש</div>
-        </div>
-        <span>+2,400 נשים כבר מצאו את המספרה שלהן</span>
-      </div>
+  <div class="relative w-full max-w-6xl mx-auto px-6 py-16 flex flex-col items-center text-center">
+    <!-- Badge -->
+    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-4 text-xs font-600" style="background:rgba(255,255,255,0.18); color:#fff; border:1px solid rgba(255,255,255,0.35); backdrop-filter:blur(6px);">
+      <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
+      המדריך המלא למספרות שיער מתולתל בישראל
     </div>
 
-    <!-- Phone mockup SVG -->
-    <div class="order-1 lg:order-2 flex justify-center lg:justify-start">
-      <div class="relative w-64 lg:w-72">
-        <svg viewBox="0 0 280 560" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full drop-shadow-2xl">
-          <!-- Phone body -->
-          <rect x="4" y="4" width="272" height="552" rx="36" fill="#1a1a1a"/>
-          <rect x="8" y="8" width="264" height="544" rx="33" fill="#f9f9f9"/>
+    <!-- Headline -->
+    <h1 class="text-4xl lg:text-5xl font-800 leading-tight mb-3" style="color:#ffffff; text-shadow:0 2px 16px rgba(0,0,0,0.2);">
+      מצאי את המספרה<br/>
+      שמבינה את<br/>
+      <span style="color:#C6B0D8;">התלתלים שלך</span>
+    </h1>
 
-          <!-- Camera notch -->
-          <rect x="108" y="16" width="64" height="20" rx="10" fill="#1a1a1a"/>
-          <circle cx="140" cy="26" r="4" fill="#2a2a2a"/>
+    <!-- Body -->
+    <p class="text-base leading-relaxed mb-5 font-400" style="color:#ede8f9; text-shadow:0 1px 8px rgba(0,0,0,0.15); max-width:480px;">
+      תילתול מרכזת את כל המספרות המתמחות בשיער מתולתל בישראל. חפשי לפי שם, עיר או איזור — ומצאי את המעצב/ת שיבינו את התלתלים שלך.
+    </p>
 
-          <!-- Status bar -->
-          <text x="24" y="50" font-family="Heebo, sans-serif" font-size="9" fill="#6b7280">9:41</text>
-          <text x="220" y="50" font-family="Heebo, sans-serif" font-size="9" fill="#6b7280">●●●</text>
-
-          <!-- App header -->
-          <rect x="16" y="58" width="248" height="40" rx="0" fill="#f9f9f9"/>
-          <text x="140" y="82" font-family="Heebo, sans-serif" font-size="13" font-weight="700" fill="#1a1a1a" text-anchor="middle">תילתול</text>
-
-          <!-- Search bar inside phone -->
-          <rect x="20" y="104" width="240" height="34" rx="10" fill="white" stroke="#e5e7eb" stroke-width="1"/>
-          <circle cx="36" cy="121" r="5" fill="none" stroke="#9d7ecb" stroke-width="1.5"/>
-          <line x1="40" y1="125" x2="43" y2="128" stroke="#9d7ecb" stroke-width="1.5" stroke-linecap="round"/>
-          <text x="52" y="125" font-family="Heebo, sans-serif" font-size="9" fill="#9ca3af">חפשי עיר או שם מספרה...</text>
-
-          <!-- Israel map outline (simplified SVG path) -->
-          <!-- Map background -->
-          <rect x="16" y="146" width="248" height="330" rx="4" fill="#ede9f7" opacity="0.3"/>
-
-          <!-- Israel simplified outline -->
-          <path d="
-            M 140 160
-            L 155 165
-            L 170 170
-            L 178 180
-            L 182 195
-            L 185 210
-            L 188 228
-            L 186 245
-            L 190 258
-            L 195 270
-            L 192 285
-            L 185 295
-            L 178 310
-            L 170 325
-            L 162 340
-            L 155 350
-            L 148 360
-            L 142 370
-            L 140 380
-            L 138 370
-            L 132 360
-            L 125 350
-            L 118 340
-            L 110 325
-            L 102 310
-            L 95 295
-            L 88 285
-            L 85 270
-            L 90 258
-            L 94 245
-            L 92 228
-            L 95 210
-            L 98 195
-            L 102 180
-            L 110 170
-            L 125 165
-            Z
-          " fill="#e8e0f5" stroke="#c4b0e8" stroke-width="1.5" stroke-linejoin="round"/>
-
-          <!-- Water (Mediterranean west) -->
-          <path d="M 16 200 L 100 180 L 98 195 L 95 210 L 92 228 L 92 245 L 90 258 L 85 270 L 88 285 L 16 285 Z" fill="#dbeafe" opacity="0.4"/>
-
-          <!-- Dead Sea area -->
-          <ellipse cx="178" cy="290" rx="8" ry="14" fill="#bfdbfe" opacity="0.6"/>
-
-          <!-- City dots -->
-          <!-- Tel Aviv -->
-          <circle cx="102" cy="238" r="6" fill="#9d7ecb" opacity="0.9" class="pulse-dot"/>
-          <!-- Jerusalem -->
-          <circle cx="148" cy="270" r="5.5" fill="#9d7ecb" opacity="0.9"/>
-          <!-- Haifa -->
-          <circle cx="108" cy="192" r="5" fill="#9d7ecb" opacity="0.9"/>
-          <!-- Beer Sheva -->
-          <circle cx="130" cy="330" r="4.5" fill="#9d7ecb" opacity="0.9"/>
-          <!-- Netanya -->
-          <circle cx="100" cy="218" r="4" fill="#b39ddb" opacity="0.8"/>
-          <!-- Ramat Gan -->
-          <circle cx="108" cy="242" r="3.5" fill="#b39ddb" opacity="0.8"/>
-          <!-- Rishon LeZion -->
-          <circle cx="105" cy="252" r="3.5" fill="#b39ddb" opacity="0.8"/>
-          <!-- Ashdod -->
-          <circle cx="98" cy="275" r="4" fill="#b39ddb" opacity="0.8"/>
-          <!-- Petah Tikva -->
-          <circle cx="115" cy="237" r="3.5" fill="#c8b8ef" opacity="0.8"/>
-          <!-- Modiin -->
-          <circle cx="128" cy="255" r="3.5" fill="#c8b8ef" opacity="0.8"/>
-          <!-- Rehovot -->
-          <circle cx="108" cy="260" r="3.5" fill="#c8b8ef" opacity="0.8"/>
-          <!-- Herzliya -->
-          <circle cx="100" cy="228" r="3.5" fill="#c8b8ef" opacity="0.8"/>
-
-          <!-- Tooltip on Tel Aviv dot -->
-          <g class="float-tooltip">
-            <!-- Tooltip bubble -->
-            <rect x="50" y="200" width="130" height="52" rx="10" fill="white" stroke="#e5e7eb" stroke-width="1"/>
-            <!-- Tooltip tail -->
-            <polygon points="102,238 96,252 108,252" fill="white" stroke="#e5e7eb" stroke-width="1"/>
-            <!-- Tooltip content -->
-            <text x="170" y="218" font-family="Heebo, sans-serif" font-size="9" font-weight="700" fill="#1a1a1a" text-anchor="end">מספרת תלתלים – תל אביב</text>
-            <!-- Stars -->
-            <text x="170" y="232" font-family="Heebo, sans-serif" font-size="8" fill="#f59e0b" text-anchor="end">★★★★★</text>
-            <text x="68" y="232" font-family="Heebo, sans-serif" font-size="8" fill="#6b7280">5.0 (84 ביקורות)</text>
-            <rect x="60" y="238" width="50" height="10" rx="3" fill="#9d7ecb"/>
-            <text x="85" y="246" font-family="Heebo, sans-serif" font-size="7" fill="white" text-anchor="middle">לפרטים</text>
-          </g>
-
-          <!-- City labels (small) -->
-          <text x="88" y="240" font-family="Heebo, sans-serif" font-size="7.5" fill="#4b5563" text-anchor="middle">תל אביב</text>
-          <text x="155" y="275" font-family="Heebo, sans-serif" font-size="7.5" fill="#4b5563" text-anchor="middle">ירושלים</text>
-          <text x="96" y="189" font-family="Heebo, sans-serif" font-size="7.5" fill="#4b5563" text-anchor="middle">חיפה</text>
-          <text x="130" y="344" font-family="Heebo, sans-serif" font-size="7.5" fill="#4b5563" text-anchor="middle">ב"ש</text>
-
-          <!-- Bottom bar -->
-          <rect x="16" y="480" width="248" height="58" rx="0" fill="white" stroke="#f3f4f6" stroke-width="1"/>
-          <!-- Bottom nav icons -->
-          <g transform="translate(40, 500)">
-            <rect x="-12" y="-10" width="24" height="24" rx="6" fill="#f5f2fc"/>
-            <line x1="0" y1="-4" x2="0" y2="8" stroke="#9d7ecb" stroke-width="1.5" stroke-linecap="round"/>
-            <line x1="-5" y1="1" x2="5" y2="1" stroke="#9d7ecb" stroke-width="1.5" stroke-linecap="round"/>
-          </g>
-          <g transform="translate(94, 500)">
-            <circle cx="0" cy="2" r="7" fill="none" stroke="#d1d5db" stroke-width="1.5"/>
-            <line x1="5" y1="7" x2="9" y2="11" stroke="#d1d5db" stroke-width="1.5" stroke-linecap="round"/>
-          </g>
-          <g transform="translate(148, 500)">
-            <circle cx="0" cy="2" r="5" fill="none" stroke="#d1d5db" stroke-width="1.5"/>
-            <circle cx="0" cy="2" r="2" fill="#d1d5db"/>
-          </g>
-          <g transform="translate(202, 500)">
-            <circle cx="0" cy="0" r="6" fill="none" stroke="#d1d5db" stroke-width="1.5"/>
-            <line x1="-3" y1="0" x2="3" y2="0" stroke="#d1d5db" stroke-width="1.5"/>
-            <line x1="0" y1="-3" x2="0" y2="3" stroke="#d1d5db" stroke-width="1.5"/>
-          </g>
-
-          <!-- Home indicator -->
-          <rect x="110" y="548" width="60" height="4" rx="2" fill="#d1d5db"/>
-
-          <!-- Phone frame border -->
-          <rect x="4" y="4" width="272" height="552" rx="36" fill="none" stroke="#1a1a1a" stroke-width="8"/>
-          <!-- Side button -->
-          <rect x="272" y="160" width="8" height="40" rx="4" fill="#2a2a2a"/>
-          <!-- Volume buttons -->
-          <rect x="0" y="140" width="8" height="28" rx="4" fill="#2a2a2a"/>
-          <rect x="0" y="178" width="8" height="28" rx="4" fill="#2a2a2a"/>
-        </svg>
-
-        <!-- Floating stats card -->
-        <div class="absolute -bottom-4 -right-6 bg-white border border-gray-100 rounded-2xl shadow-lg px-4 py-3 text-right float-tooltip" style="animation-delay:1s">
-          <div class="text-xs text-gray-400 mb-0.5">מספרות רשומות</div>
-          <div class="text-xl font-700 text-gray-900">340+</div>
-          <div class="text-xs text-lilac-500 font-500">בכל הארץ</div>
-        </div>
+    <!-- Social proof -->
+    <div class="flex items-center justify-center gap-3 text-sm" style="color:rgba(255,255,255,0.85);">
+      <div class="flex -space-x-2 space-x-reverse">
+        <div class="w-7 h-7 rounded-full border-2 flex items-center justify-center text-xs font-600" style="background:rgba(221,212,245,0.75); border-color:rgba(255,255,255,0.5); color:#5e3fa3;">נ</div>
+        <div class="w-7 h-7 rounded-full border-2 flex items-center justify-center text-xs font-600" style="background:rgba(200,184,239,0.75); border-color:rgba(255,255,255,0.5); color:#5e3fa3;">מ</div>
+        <div class="w-7 h-7 rounded-full border-2 flex items-center justify-center text-xs font-600" style="background:rgba(179,157,219,0.85); border-color:rgba(255,255,255,0.5); color:#fff;">ש</div>
       </div>
+      <span>+2,400 נשים כבר מצאו את המספרה שלהן</span>
     </div>
   </div>
-</section>
 
-<!-- ═══════════════════════════════════════════
-     HOW IT WORKS
-════════════════════════════════════════════ -->
-<section id="how" class="bg-gray-50 py-20 lg:py-28">
-  <div class="max-w-6xl mx-auto px-6">
-    <div class="text-center mb-16 fade-up">
-      <p class="text-lilac-500 text-sm font-600 uppercase tracking-widest mb-3">איך זה עובד</p>
-      <h2 class="text-3xl lg:text-4xl font-800 text-gray-900">שלושה צעדים פשוטים</h2>
-    </div>
-
-    <div class="grid md:grid-cols-3 gap-8 relative">
-      <!-- Connector line -->
-      <div class="hidden md:block absolute top-10 right-1/6 left-1/6 h-px bg-gray-200 z-0"></div>
-
-      <!-- Step 1 -->
-      <div class="fade-up fade-up-delay-1 relative text-center">
-        <div class="w-16 h-16 rounded-2xl bg-lilac-50 border border-lilac-100 flex items-center justify-center mx-auto mb-5 relative z-10">
-          <i data-lucide="map-pin" class="w-7 h-7 text-lilac-500"></i>
-        </div>
-        <div class="w-6 h-6 rounded-full bg-lilac-400 text-white text-xs font-700 flex items-center justify-center mx-auto -mt-3 mb-4 relative z-10">1</div>
-        <h3 class="text-lg font-700 text-gray-900 mb-2">חפשי לפי מיקום</h3>
-        <p class="text-gray-500 text-sm leading-relaxed">הזיני עיר, שכונה או איזור גיאוגרפי וקבלי רשימת מספרות מתמחות בשיער מתולתל בקרבתך.</p>
-      </div>
-
-      <!-- Step 2 -->
-      <div class="fade-up fade-up-delay-2 relative text-center">
-        <div class="w-16 h-16 rounded-2xl bg-lilac-50 border border-lilac-100 flex items-center justify-center mx-auto mb-5 relative z-10">
-          <i data-lucide="list-filter" class="w-7 h-7 text-lilac-500"></i>
-        </div>
-        <div class="w-6 h-6 rounded-full bg-lilac-400 text-white text-xs font-700 flex items-center justify-center mx-auto -mt-3 mb-4 relative z-10">2</div>
-        <h3 class="text-lg font-700 text-gray-900 mb-2">עיינו בפרופילים</h3>
-        <p class="text-gray-500 text-sm leading-relaxed">קראי ביקורות, צפי בתמונות עבודות, ובדקי מי מתמחה בשיטת ה-Curly Girl או בטיפולים ספציפיים.</p>
-      </div>
-
-      <!-- Step 3 -->
-      <div class="fade-up fade-up-delay-3 relative text-center">
-        <div class="w-16 h-16 rounded-2xl bg-lilac-50 border border-lilac-100 flex items-center justify-center mx-auto mb-5 relative z-10">
-          <i data-lucide="calendar-check" class="w-7 h-7 text-lilac-500"></i>
-        </div>
-        <div class="w-6 h-6 rounded-full bg-lilac-400 text-white text-xs font-700 flex items-center justify-center mx-auto -mt-3 mb-4 relative z-10">3</div>
-        <h3 class="text-lg font-700 text-gray-900 mb-2">קבעי תור</h3>
-        <p class="text-gray-500 text-sm leading-relaxed">צרי קשר עם המספרה ישירות דרך האפליקציה וקבלי תזכורת אוטומטית לפני התור.</p>
-      </div>
-    </div>
-  </div>
 </section>
 
 <!-- ═══════════════════════════════════════════
      SEARCH + MAP
 ════════════════════════════════════════════ -->
-<section id="search" class="bg-white py-20 lg:py-28 border-t border-gray-100">
+<section id="search" class="py-10 lg:py-14 border-t border-lilac-100">
   <div class="max-w-6xl mx-auto px-6">
     <div class="text-center mb-10 fade-up">
       <p class="text-lilac-500 text-sm font-600 uppercase tracking-widest mb-3">מצאי מספרה</p>
@@ -521,9 +275,56 @@
 </section>
 
 <!-- ═══════════════════════════════════════════
+     HOW IT WORKS
+════════════════════════════════════════════ -->
+<section id="how" class="bg-lilac-50 py-20 lg:py-28">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="text-center mb-16 fade-up">
+      <p class="text-lilac-500 text-sm font-600 uppercase tracking-widest mb-3">איך זה עובד</p>
+      <h2 class="text-3xl lg:text-4xl font-800 text-gray-900">שלושה צעדים פשוטים</h2>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-8 relative">
+      <!-- Connector line -->
+      <div class="hidden md:block absolute top-10 right-1/6 left-1/6 h-px bg-gray-200 z-0"></div>
+
+      <!-- Step 1 -->
+      <div class="fade-up fade-up-delay-1 relative text-center">
+        <div class="w-16 h-16 rounded-2xl bg-lilac-50 border border-lilac-100 flex items-center justify-center mx-auto mb-5 relative z-10">
+          <i data-lucide="map-pin" class="w-7 h-7 text-lilac-500"></i>
+        </div>
+        <div class="w-6 h-6 rounded-full bg-lilac-400 text-white text-xs font-700 flex items-center justify-center mx-auto -mt-3 mb-4 relative z-10">1</div>
+        <h3 class="text-lg font-700 text-gray-900 mb-2">חפשי לפי מיקום</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">הזיני עיר, שכונה או איזור גיאוגרפי וקבלי רשימת מספרות מתמחות בשיער מתולתל בקרבתך.</p>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="fade-up fade-up-delay-2 relative text-center">
+        <div class="w-16 h-16 rounded-2xl bg-lilac-50 border border-lilac-100 flex items-center justify-center mx-auto mb-5 relative z-10">
+          <i data-lucide="list-filter" class="w-7 h-7 text-lilac-500"></i>
+        </div>
+        <div class="w-6 h-6 rounded-full bg-lilac-400 text-white text-xs font-700 flex items-center justify-center mx-auto -mt-3 mb-4 relative z-10">2</div>
+        <h3 class="text-lg font-700 text-gray-900 mb-2">עיינו בפרופילים</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">קראי ביקורות, צפי בתמונות עבודות, ובדקי מי מתמחה בשיטת ה-Curly Girl או בטיפולים ספציפיים.</p>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="fade-up fade-up-delay-3 relative text-center">
+        <div class="w-16 h-16 rounded-2xl bg-lilac-50 border border-lilac-100 flex items-center justify-center mx-auto mb-5 relative z-10">
+          <i data-lucide="calendar-check" class="w-7 h-7 text-lilac-500"></i>
+        </div>
+        <div class="w-6 h-6 rounded-full bg-lilac-400 text-white text-xs font-700 flex items-center justify-center mx-auto -mt-3 mb-4 relative z-10">3</div>
+        <h3 class="text-lg font-700 text-gray-900 mb-2">צרי קשר</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">צרי קשר עם המספרה ישירות בהתאם לטלפון הרשום.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
      FEATURES
 ════════════════════════════════════════════ -->
-<section id="features" class="bg-white py-20 lg:py-28">
+<section id="features" class="bg-lilac-50 py-20 lg:py-28">
   <div class="max-w-6xl mx-auto px-6">
     <div class="text-center mb-16 fade-up">
       <p class="text-lilac-500 text-sm font-600 uppercase tracking-widest mb-3">יתרונות</p>
@@ -532,7 +333,7 @@
 
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
       <!-- Feature 1 -->
-      <div class="fade-up card-hover bg-gray-50 border border-gray-100 rounded-2xl p-6">
+      <div class="fade-up card-hover bg-lilac-100 border border-lilac-200 rounded-2xl p-6">
         <div class="w-11 h-11 rounded-xl bg-lilac-50 border border-lilac-100 flex items-center justify-center mb-4">
           <i data-lucide="search" class="w-5 h-5 text-lilac-500"></i>
         </div>
@@ -541,7 +342,7 @@
       </div>
 
       <!-- Feature 2 -->
-      <div class="fade-up fade-up-delay-1 card-hover bg-gray-50 border border-gray-100 rounded-2xl p-6">
+      <div class="fade-up fade-up-delay-1 card-hover bg-lilac-100 border border-lilac-200 rounded-2xl p-6">
         <div class="w-11 h-11 rounded-xl bg-lilac-50 border border-lilac-100 flex items-center justify-center mb-4">
           <i data-lucide="map" class="w-5 h-5 text-lilac-500"></i>
         </div>
@@ -550,7 +351,7 @@
       </div>
 
       <!-- Feature 3 -->
-      <div class="fade-up fade-up-delay-2 card-hover bg-gray-50 border border-gray-100 rounded-2xl p-6">
+      <div class="fade-up fade-up-delay-2 card-hover bg-lilac-100 border border-lilac-200 rounded-2xl p-6">
         <div class="w-11 h-11 rounded-xl bg-lilac-50 border border-lilac-100 flex items-center justify-center mb-4">
           <i data-lucide="badge-check" class="w-5 h-5 text-lilac-500"></i>
         </div>
@@ -558,106 +359,10 @@
         <p class="text-sm text-gray-500 leading-relaxed">כל מספרה ברשימה עברה אימות כמתמחה בשיער מתולתל.</p>
       </div>
 
-      <!-- Feature 4 -->
-      <div class="fade-up card-hover bg-gray-50 border border-gray-100 rounded-2xl p-6">
-        <div class="w-11 h-11 rounded-xl bg-lilac-50 border border-lilac-100 flex items-center justify-center mb-4">
-          <i data-lucide="star" class="w-5 h-5 text-lilac-500"></i>
-        </div>
-        <h3 class="text-base font-700 text-gray-900 mb-2">ביקורות אמיתיות</h3>
-        <p class="text-sm text-gray-500 leading-relaxed">ביקורות מנשים עם שיער מתולתל — מהקהילה, בשביל הקהילה.</p>
-      </div>
-
-      <!-- Feature 5 -->
-      <div class="fade-up fade-up-delay-1 card-hover bg-gray-50 border border-gray-100 rounded-2xl p-6">
-        <div class="w-11 h-11 rounded-xl bg-lilac-50 border border-lilac-100 flex items-center justify-center mb-4">
-          <i data-lucide="bell" class="w-5 h-5 text-lilac-500"></i>
-        </div>
-        <h3 class="text-base font-700 text-gray-900 mb-2">תזכורות תור</h3>
-        <p class="text-sm text-gray-500 leading-relaxed">קבלי תזכורת אוטומטית לפני כל תור — לא תשכחי יותר.</p>
-      </div>
-
-      <!-- Feature 6 -->
-      <div class="fade-up fade-up-delay-2 card-hover bg-gray-50 border border-gray-100 rounded-2xl p-6">
-        <div class="w-11 h-11 rounded-xl bg-lilac-50 border border-lilac-100 flex items-center justify-center mb-4">
-          <i data-lucide="heart" class="w-5 h-5 text-lilac-500"></i>
-        </div>
-        <h3 class="text-base font-700 text-gray-900 mb-2">שמירת מועדפות</h3>
-        <p class="text-sm text-gray-500 leading-relaxed">שמרי את המספרות האהובות עלייך ועקבי אחרי עדכונים.</p>
-      </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════
-     TESTIMONIALS
-════════════════════════════════════════════ -->
-<section id="testimonials" class="bg-gray-50 py-20 lg:py-28">
-  <div class="max-w-6xl mx-auto px-6">
-    <div class="text-center mb-16 fade-up">
-      <p class="text-lilac-500 text-sm font-600 uppercase tracking-widest mb-3">המלצות</p>
-      <h2 class="text-3xl lg:text-4xl font-800 text-gray-900">מה אומרות הנשים שלנו</h2>
-    </div>
-
-    <div class="grid md:grid-cols-3 gap-6">
-      <!-- Testimonial 1 -->
-      <div class="fade-up card-hover bg-white border border-gray-100 rounded-2xl p-6">
-        <div class="flex items-center gap-1 mb-4">
-          <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
-          <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
-          <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
-          <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
-          <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
-        </div>
-        <p class="text-gray-700 text-sm leading-relaxed mb-5">"סוף סוף מצאתי מעצבת שבאמת מבינה את התלתלים שלי. כבר שנתיים אני הולכת אליה בזכות תילתול. שינה לי את החיים."</p>
-        <div class="flex items-center gap-3">
-          <div class="w-9 h-9 rounded-full bg-lilac-200 flex items-center justify-center text-sm font-700 text-lilac-700">נ</div>
-          <div>
-            <div class="text-sm font-600 text-gray-900">נועה כהן</div>
-            <div class="text-xs text-gray-400">תל אביב</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Testimonial 2 -->
-      <div class="fade-up fade-up-delay-1 card-hover bg-white border border-gray-100 rounded-2xl p-6">
-        <div class="flex items-center gap-1 mb-4">
-          <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
-          <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
-          <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
-          <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
-          <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
-        </div>
-        <p class="text-gray-700 text-sm leading-relaxed mb-5">"עברתי לירושלים ולא ידעתי לאן ללכת. בתוך דקה מצאתי שלוש מספרות מעולות ליד הבית. האפליקציה פשוט עובדת."</p>
-        <div class="flex items-center gap-3">
-          <div class="w-9 h-9 rounded-full bg-lilac-300 flex items-center justify-center text-sm font-700 text-lilac-800">מ</div>
-          <div>
-            <div class="text-sm font-600 text-gray-900">מיה אברהם</div>
-            <div class="text-xs text-gray-400">ירושלים</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Testimonial 3 -->
-      <div class="fade-up fade-up-delay-2 card-hover bg-white border border-gray-100 rounded-2xl p-6">
-        <div class="flex items-center gap-1 mb-4">
-          <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
-          <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
-          <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
-          <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
-          <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
-        </div>
-        <p class="text-gray-700 text-sm leading-relaxed mb-5">"הביקורות כאן הרבה יותר מהימנות מאשר ב-Google. נשים שמבינות שיער מתולתל כותבות ביקורות לנשים שמבינות שיער מתולתל."</p>
-        <div class="flex items-center gap-3">
-          <div class="w-9 h-9 rounded-full bg-lilac-400 flex items-center justify-center text-sm font-700 text-white">ש</div>
-          <div>
-            <div class="text-sm font-600 text-gray-900">שירה לוי</div>
-            <div class="text-xs text-gray-400">חיפה</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- ═══════════════════════════════════════════
      CTA BANNER
@@ -665,30 +370,14 @@
 <section class="bg-lilac-400 py-16">
   <div class="max-w-2xl mx-auto px-6 text-center fade-up">
     <h2 class="text-2xl lg:text-3xl font-800 text-white mb-3">מוכנה למצוא את המספרה שלך?</h2>
-    <p class="text-lilac-100 mb-8 text-base">הורידי את האפליקציה ומצאי את המספרה המושלמת לשיער המתולתל שלך.</p>
-    <div class="flex flex-wrap justify-center gap-4">
-      <a href="#" class="inline-flex items-center gap-3 bg-white text-gray-900 rounded-2xl px-6 py-3.5 store-btn hover:bg-gray-100">
-        <i data-lucide="smartphone" class="w-5 h-5"></i>
-        <div class="text-right">
-          <div class="text-xs text-gray-400 leading-none mb-0.5">הורידי ב-</div>
-          <div class="text-sm font-700 leading-none">App Store</div>
-        </div>
-      </a>
-      <a href="#" class="inline-flex items-center gap-3 bg-white text-gray-900 rounded-2xl px-6 py-3.5 store-btn hover:bg-gray-100">
-        <i data-lucide="play" class="w-5 h-5"></i>
-        <div class="text-right">
-          <div class="text-xs text-gray-400 leading-none mb-0.5">הורידי ב-</div>
-          <div class="text-sm font-700 leading-none">Google Play</div>
-        </div>
-      </a>
-    </div>
+    <p class="text-lilac-100 mb-8 text-base">מצאי את המספרה המושלמת לשיער המתולתל שלך.</p>
   </div>
 </section>
 
 <!-- ═══════════════════════════════════════════
      FOOTER
 ════════════════════════════════════════════ -->
-<footer class="bg-white border-t border-gray-100 py-12">
+<footer class="bg-lilac-25 border-t border-lilac-100 py-12">
   <div class="max-w-6xl mx-auto px-6">
     <div class="grid md:grid-cols-4 gap-8 mb-10">
       <!-- Brand -->
@@ -715,12 +404,11 @@
 
       <!-- Links 1 -->
       <div>
-        <h4 class="text-sm font-700 text-gray-900 mb-4">אפליקציה</h4>
+        <h4 class="text-sm font-700 text-gray-900 mb-4">האתר</h4>
         <ul class="space-y-2 text-sm text-gray-500">
           <li><a href="#how" class="hover:text-lilac-500 transition-colors">איך זה עובד</a></li>
           <li><a href="#features" class="hover:text-lilac-500 transition-colors">יתרונות</a></li>
           <li><a href="#" class="hover:text-lilac-500 transition-colors">להוסיף מספרה</a></li>
-          <li><a href="#" class="hover:text-lilac-500 transition-colors">הורדה</a></li>
         </ul>
       </div>
 
@@ -746,28 +434,77 @@
 <script>
   // ── Salon dataset ─────────────────────────────────────────────
   const SALONS = [
-    { name: 'מספרת תלתלים',      city: 'תל אביב',      address: 'דיזנגוף 45',         lat: 32.0813, lng: 34.7738, rating: 4.9, reviews: 84 },
-    { name: 'סטודיו קרל',         city: 'ירושלים',      address: 'יפו 112',             lat: 31.7883, lng: 35.2037, rating: 4.8, reviews: 61 },
-    { name: 'תלתל חיפה',          city: 'חיפה',         address: 'הרצל 78',             lat: 32.8184, lng: 34.9896, rating: 4.7, reviews: 49 },
-    { name: 'טבעי ומתולתל',       city: 'נתניה',        address: 'הרצל 32',             lat: 32.3226, lng: 34.8532, rating: 4.8, reviews: 37 },
-    { name: 'מספרת שורשים',       city: 'רחובות',       address: 'הרצל 14',             lat: 31.8928, lng: 34.8113, rating: 4.6, reviews: 28 },
-    { name: 'קרלס סטייל',         city: 'פתח תקווה',    address: 'רוטשילד 5',           lat: 32.0878, lng: 34.8878, rating: 4.7, reviews: 53 },
-    { name: 'מספרת גלים',         city: 'אשדוד',        address: 'העצמאות 21',          lat: 31.8044, lng: 34.6553, rating: 4.5, reviews: 32 },
-    { name: 'סטודיו מגנוליה',     city: 'הרצליה',       address: 'בן גוריון 9',         lat: 32.1663, lng: 34.8431, rating: 4.9, reviews: 72 },
-    { name: 'מספרת דנה',          city: 'רמת גן',       address: 'ביאליק 3',            lat: 32.0680, lng: 34.8235, rating: 4.6, reviews: 41 },
-    { name: 'שיער חופשי',         city: 'מודיעין',      address: 'עמק האלה 7',          lat: 31.8969, lng: 35.0095, rating: 4.7, reviews: 29 },
-    { name: 'מספרת ספיר',         city: 'באר שבע',      address: 'רגר 44',              lat: 31.2518, lng: 34.7913, rating: 4.5, reviews: 22 },
-    { name: 'תלתלית',             city: 'ראשון לציון',  address: 'רוטשילד 88',          lat: 31.9730, lng: 34.7925, rating: 4.8, reviews: 65 },
-    { name: 'קרלי גרל',           city: 'כפר סבא',      address: 'ויצמן 12',            lat: 32.1784, lng: 34.9079, rating: 4.6, reviews: 34 },
-    { name: 'מספרת נועה',         city: 'הוד השרון',    address: 'הדקל 6',              lat: 32.1506, lng: 34.8965, rating: 4.7, reviews: 26 },
-    { name: 'טבעי',               city: 'רעננה',        address: 'אחוזה 77',            lat: 32.1836, lng: 34.8706, rating: 4.8, reviews: 58 },
-    { name: 'מספרת הים',          city: 'תל אביב',      address: 'בן יהודה 120',        lat: 32.0750, lng: 34.7700, rating: 4.7, reviews: 91 },
-    { name: 'קרלסטייל',           city: 'חדרה',         address: 'גבעת אולגה 3',        lat: 32.4340, lng: 34.9190, rating: 4.5, reviews: 19 },
-    { name: 'גלים ותלתלים',       city: 'נהריה',        address: 'געתון 14',            lat: 33.0048, lng: 35.0985, rating: 4.6, reviews: 17 },
-    { name: 'מספרת ענבל',         city: 'אילת',         address: 'התמר 5',              lat: 29.5569, lng: 34.9513, rating: 4.4, reviews: 14 },
-    { name: 'סטודיו אורכידאה',    city: 'ירושלים',      address: 'עמק רפאים 34',        lat: 31.7600, lng: 35.2180, rating: 4.9, reviews: 77 },
-    { name: 'מספרת לוטוס',        city: 'תל אביב',      address: 'שינקין 22',           lat: 32.0620, lng: 34.7720, rating: 4.8, reviews: 103 },
-    { name: 'תלתל בצפון',         city: 'עכו',          address: 'בן עמי 8',            lat: 32.9242, lng: 35.0722, rating: 4.5, reviews: 21 },
+    { name: 'עיצוב שיער מוטי', city: 'נתניה', address: 'הרב רפאל אנקווה 17', phone: '09-8359893', link: 'https://www.motizvigihairdresser.com', lat: 32.28571, lng: 34.8562, rating: 4.8, reviews: 132 },
+    { name: 'אהוד', city: 'קדימה', address: 'הנופר 17', phone: '050-6363669', link: '', lat: 32.27284, lng: 34.90846, rating: null, reviews: null },
+    { name: 'שירה אגיב', city: 'קדימה', address: 'המעלית 4', phone: '052-9935699', link: 'https://www.instagram.com/shiraagiv', lat: 32.27457, lng: 34.91991, rating: null, reviews: null },
+    { name: 'פזור - טליה אברך', city: 'רמת השרון', address: 'ז\' בחשון 31', phone: '054-4420759', link: 'https://www.facebook.com/pazurtaliaavrech', lat: 32.14861, lng: 34.82908, rating: null, reviews: null },
+    { name: 'המתולתלות של בנון', city: 'גני תקווה', address: 'הכרמל 20', phone: '052-8932295', link: 'https://www.instagram.com/benons_curly_girls', lat: 32.05942, lng: 34.88212, rating: 4.9, reviews: 392 },
+    { name: 'Curly Hair TLV', city: 'תל אביב', address: 'בן יהודה 240', phone: '053-5557810', link: 'https://curlyhair.co.il', lat: 32.09344, lng: 34.77518, rating: 4.8, reviews: 63 },
+    { name: 'תומר דוידוב תלתלים', city: 'תל אביב', address: 'שדרות ירושלים 11', phone: '052-3881618', link: 'https://www.instagram.com/tomerdavidov/', lat: 32.05012, lng: 34.75884, rating: 4.7, reviews: 634 },
+    { name: 'מספרה לתלתלים יאיר עופרי', city: 'גני תקווה', address: 'הרי יהודה 56', phone: '052-8810072', link: 'https://www.instagram.com/yair_curls_expert', lat: 32.06098, lng: 34.8693, rating: 4.9, reviews: 346 },
+    { name: 'תלטליה עיצוב תלתלים', city: 'חדרה', address: 'הנשיא 65', phone: '055-5680095', link: 'https://talyaarbel.com', lat: 32.43924, lng: 34.92167, rating: 4.8, reviews: 288 },
+    { name: 'מספרת כלנית למתולתלות', city: 'רמת גן', address: 'האילנות 6', phone: '054-9309069', link: '', lat: 32.05912, lng: 34.84742, rating: 5.0, reviews: 10 },
+    { name: 'אורטל גרין מספרה למתולתלות', city: 'קריית אונו', address: 'שמירה אימבר גדיש 9', phone: '053-9488554', link: 'https://www.instagram.com/ortalgrin_', lat: 32.03484, lng: 34.86469, rating: 5.0, reviews: 83 },
+    { name: 'פרג\' עיצוב שיער', city: 'כפר סבא', address: 'וייצמן 60', phone: '054-4511102', link: 'https://www.facebook.com/farajkfarsaba', lat: 32.17288, lng: 34.91854, rating: 4.7, reviews: 81 },
+    { name: 'Salon TS Hair Style צחי סלע', city: 'תל אביב', address: 'הדר יוסף 10', phone: '054-6761441', link: 'https://www.facebook.com/TzachiSelaHairSalon', lat: 32.10967, lng: 34.81831, rating: 4.6, reviews: 29 },
+    { name: 'Omer Shimoni מספרה', city: 'תל אביב', address: 'יגאל אלון 94', phone: '050-6551156', link: 'https://www.omer-shimoni.com', lat: 32.06887, lng: 34.794, rating: 4.8, reviews: 708 },
+    { name: 'יורם תלתלים מספרה קרית יובל', city: 'ירושלים', address: 'אורוגוואי 31', phone: '050-9222261', link: 'https://www.instagram.com/yoram_taltalim', lat: 31.76118, lng: 35.17568, rating: 4.8, reviews: 372 },
+    { name: 'רויטל טובול - מעצבת שיער', city: 'חיפה', address: 'קדושי יאסי 2', phone: '052-2702205', link: 'https://saparit.com', lat: 32.79418, lng: 34.96426, rating: 4.9, reviews: 177 },
+    { name: 'תלתלי ליאת', city: 'קריית טבעון', address: 'הרצל 38', phone: '054-9900146', link: 'https://www.facebook.com/LIAT.HAIR', lat: 32.69593, lng: 35.10749, rating: 4.0, reviews: 4 },
+    { name: 'מספרת יניב שטיין', city: 'באר שבע', address: 'עין גדי 14', phone: '050-7287788', link: 'https://www.yanivstein.com', lat: 31.24863, lng: 34.77011, rating: 4.7, reviews: 192 },
+    { name: 'מישל מרסייה הרצליה', city: 'הרצליה', address: 'נתן אלתרמן 42', phone: '09-7444414', link: 'https://www.michelmercier.co.il', lat: 32.17453, lng: 34.83875, rating: 4.5, reviews: 64 },
+    { name: 'מספרת Heads ראשון לציון', city: 'ראשון לציון', address: 'החלמונית 20', phone: '072-2773162', link: 'https://headspro.co.il/רשת-מספרות-HEADS-ראשון-לציון', lat: 31.97266, lng: 34.78371, rating: 4.6, reviews: 50 },
+    { name: 'מספרת Heads נס ציונה', city: 'נס ציונה', address: 'נורדאו 24', phone: '072-2773168', link: 'https://headspro.co.il/רשת-מספרות-HEADS-נס-ציונה', lat: 31.92729, lng: 34.80279, rating: 4.6, reviews: 52 },
+    { name: 'Love is in the Hair by Ram Solan', city: 'תל אביב', address: 'דיזנגוף 46', phone: '050-2236630', link: 'https://www.instagram.com/ram.solan', lat: 32.07485, lng: 34.77632, rating: 5.0, reviews: 310 },
+    { name: 'מספראלה (Misparela)', city: 'פתח תקווה', address: 'חפץ חיים 45', phone: '052-6345037', link: 'https://www.instagram.com/misparela', lat: 32.08331, lng: 34.88721, rating: 5.0, reviews: 9 },
+    { name: 'תיספורסטו (מספרה ניידת)', city: 'תל אביב', address: 'התחייה 14', phone: '054-3075449', link: 'https://www.instagram.com/tisporastu', lat: 32.05012, lng: 34.76293, rating: 5.0, reviews: 8 },
+    { name: 'ויקו וחן שטרית', city: 'בת ים', address: 'החשמונאים 13', phone: '03-6595204 / 050-8211645', link: 'https://www.instagram.com/viko_shitrit', lat: 32.02082, lng: 34.75125, rating: 4.6, reviews: 34 },
+    { name: 'Titi - M (מירב טיטי)', city: 'רמת גן', address: 'דרך נגבה 35', phone: '054-7773306', link: 'https://www.facebook.com/p/Titi-M-%D7%9C%D7%94%D7%91%D7%9C%D7%99%D7%98-%D7%90%D7%AA-%D7%94%D7%99%D7%95%D7%A4%D7%99-%D7%91%D7%A9%D7%99%D7%A2%D7%A8%D7%9A-100063618340430', lat: 32.07014, lng: 34.82873, rating: 5.0, reviews: 39 },
+    { name: 'ירון הירשברג מספרה יוצאת דופן', city: 'רמת גן', address: 'שדרות ירושלים 27', phone: '050-7448229', link: 'https://www.yaron-hershberg.co.il', lat: 32.07491, lng: 34.82204, rating: 4.8, reviews: 121 },
+    { name: 'רותם חן', city: 'חדרה', address: 'העצמאות 37', phone: '054-4546535', link: 'https://www.instagram.com/rotemizem', lat: 32.42708, lng: 34.94895, rating: 5.0, reviews: 4 },
+    { name: 'טל פרידמן', city: 'נתניה', address: 'רחוב המרגניות 10', phone: '054-3452823', link: '', lat: 32.27056, lng: 34.84107, rating: 4.8, reviews: 20 },
+    { name: 'דניאל מעצבי שיער', city: 'חיפה', address: 'שדרות בן גוריון 30', phone: '04-8555544', link: 'https://www.hairbeauty.co.il', lat: 32.81801, lng: 34.98924, rating: 4.8, reviews: 97 },
+    { name: 'Wolfbarbers - דריה', city: 'חיפה', address: '', phone: '', link: 'https://www.wolfbarbers.shop', lat: 32.81912, lng: 34.99839, rating: null, reviews: null },
+    { name: 'יחיאל שריקי', city: 'קריית ביאליק', address: 'יגאל בשן 2', phone: '054-5856891', link: 'https://www.instagram.com/hairbyshriki?stkn=NDlqNjRzZjduMTRz', lat: 32.84996, lng: 35.10487, rating: 4.5, reviews: 16 },
+    { name: 'אסף שלום', city: 'ראש פינה', address: 'האלון 8', phone: '052-5400808', link: 'https://www.facebook.com/share/1FkSYgK4a3/', lat: 32.95993, lng: 35.54075, rating: null, reviews: null },
+    { name: 'אדהם', city: 'מעלות תרשיחא', address: 'כיכר השוק 1', phone: '054-4376204', link: 'https://www.instagram.com/adham.hairdesigner', lat: 33.01077, lng: 35.26751, rating: 5.0, reviews: 7 },
+    { name: 'נועה גלעדי גוזרת ומעצבת שיער', city: 'משגב עם', address: '', phone: '050-4557287', link: 'https://www.facebook.com/drycuts', lat: 33.24779, lng: 35.54867, rating: null, reviews: null },
+    { name: 'אבי מלכה עיצוב שיער', city: 'קריית מוצקין', address: 'דבורה 16', phone: '04-6964241', link: 'https://www.instagram.com/avimalka_hair', lat: 32.8256, lng: 35.07835, rating: 4.8, reviews: 35 },
+    { name: 'קובי גבריאל', city: 'כרמיאל', address: 'בז 84', phone: '04-9999818', link: 'https://www.instagram.com/kobi.gavriel.hair', lat: 32.90022, lng: 35.29317, rating: 5.0, reviews: 1 },
+    { name: 'ליז אבוחצירה', city: 'עפולה', address: '', phone: '052-4701276', link: 'https://www.instagram.com/liz_abu25', lat: 32.60756, lng: 35.28909, rating: null, reviews: null },
+    { name: 'ז\'אנה וינוקור עיצוב שיער', city: 'חיפה', address: 'צביה ויצחק 1', phone: '052-6241295', link: 'https://www.instagram.com/zhannavinokur', lat: 32.79437, lng: 34.96738, rating: null, reviews: null },
+    { name: 'רמה ספרית טבעית', city: 'קריית טבעון', address: 'סמטת האלה', phone: '054-5657518', link: 'https://www.facebook.com/p/%D7%A8%D7%9E%D7%94-%D7%A1%D7%A4%D7%A8%D7%99%D7%AA-%D7%98%D7%91%D7%A2%D7%99%D7%AA-100063522764116/?locale=he_IL', lat: 32.72211, lng: 35.13429, rating: 5.0, reviews: 42 },
+    { name: 'ארז פרג\'יאן', city: 'כרמיאל', address: 'הפלמ"ח 25', phone: '04-9883999', link: 'https://erez.drsite.co.il', lat: 32.90486, lng: 35.28153, rating: 4.2, reviews: 50 },
+    { name: 'ליאור ביגר', city: 'קריית ביאליק', address: 'קרן היסוד 64 (מרכז סביניה)', phone: '04-8776699', link: 'https://www.facebook.com/lior1first', lat: 32.82944, lng: 35.08447, rating: 5.0, reviews: 29 },
+    { name: 'The Brothers - אילת אברג\'יל', city: 'הרצליה', address: 'סוקולוב 63', phone: '052-4766742', link: 'https://www.thebrothers-hairboutique.com', lat: 32.16738, lng: 34.85056, rating: 4.9, reviews: 560 },
+    { name: 'סופיה', city: 'נתניה', address: 'יהודה פרח', phone: '052-2238045', link: '', lat: 32.30304, lng: 34.87168, rating: null, reviews: null },
+    { name: 'אודי צחי', city: 'רעננה', address: 'אחוזה 170', phone: '054-6630015', link: 'https://www.instagram.com/udi_tzachi', lat: 32.18259, lng: 34.86552, rating: null, reviews: null },
+    { name: 'רונה עיצוב שיער', city: 'הרצליה', address: 'בן יהודה 15', phone: '052-4550473', link: 'https://www.instagram.com/rona_hairartist/', lat: 32.16126, lng: 34.84521, rating: 5.0, reviews: 180 },
+    { name: 'ברי ביבי (במספרה קצוציק)', city: 'הוד השרון', address: 'הבנים 9', phone: '077-2040237', link: '', lat: 32.15493, lng: 34.87719, rating: 4.8, reviews: 231 },
+    { name: 'אריה פסח', city: 'הוד השרון', address: 'יהושע בן גמלא 7', phone: '054-4434514', link: 'https://www.facebook.com/arie.pesah.7?locale=he_IL', lat: 32.15964, lng: 34.89578, rating: 4.9, reviews: 25 },
+    { name: 'זוהר סיטנר - מספרה טבעית', city: 'כפר סבא', address: 'הרצל 11', phone: '052-2700519', link: 'https://www.facebook.com/p/%D7%96%D7%94%D7%A8-%D7%A1%D7%99%D7%98%D7%A0%D7%A8-%D7%9E%D7%A1%D7%A4%D7%A8%D7%94-%D7%98%D7%91%D7%A2%D7%99%D7%AA-100048607460840', lat: 32.17461, lng: 34.91115, rating: 5.0, reviews: 2 },
+    { name: 'עוז בריגה', city: 'נתניה', address: 'לויתן 4', phone: '054-8314242', link: 'https://ozbriga.com', lat: 32.35083, lng: 34.85693, rating: 5.0, reviews: 52 },
+    { name: 'עדי אמיר - עיצוב שיער', city: 'רמת גן', address: 'יהושפט 3', phone: '050-7999933', link: 'https://www.instagram.com/adiamir10', lat: 32.04943, lng: 34.81966, rating: 4.7, reviews: 130 },
+    { name: 'שירן בכר', city: 'גבעתיים', address: 'מנורה 12', phone: '052-4254856', link: 'https://www.instagram.com/baharshiran', lat: 32.06462, lng: 34.80999, rating: 4.5, reviews: 10 },
+    { name: 'קוסמא', city: 'תל אביב', address: 'דוידקה 9', phone: '054-3048197', link: 'https://www.kosmahair.com/v2/', lat: 32.05447, lng: 34.7926, rating: null, reviews: null },
+    { name: 'עידן לוי', city: 'רחובות', address: 'הרצל 130', phone: '052-6690945', link: 'https://www.instagram.com/idanlevi_hairdesign', lat: 31.89073, lng: 34.81301, rating: 4.7, reviews: 239 },
+    { name: 'שרון בלנקשטיין Hair Color Wiz', city: 'תל אביב', address: 'דיזנגוף סנטר', phone: '054-7537906', link: 'https://www.instagram.com/haircolorwiz', lat: 32.07525, lng: 34.77459, rating: 5.0, reviews: 9 },
+    { name: 'ארז ישראלי - מעצב שיער', city: 'רמת גן', address: 'בן צבי 2', phone: '03-5748014', link: 'https://www.erezisraeli.co.il', lat: 32.0578, lng: 34.82699, rating: 4.9, reviews: 42 },
+    { name: 'שרית מכבוש (שרית הספרית)', city: 'חולון', address: 'הופיין 52', phone: '050-4001413', link: 'https://www.instagram.com/sarit_hairstyle', lat: 32.01379, lng: 34.76986, rating: 4.0, reviews: 4 },
+    { name: 'ג\'יין אברהם - מומחית לתלתלים', city: 'פתח תקווה', address: '', phone: '', link: 'https://www.instagram.com/jane_avraham', lat: 32.08776, lng: 34.886, rating: null, reviews: null },
+    { name: 'שי נשאוי - מגיע לבית הלקוחה', city: 'לוד', address: '', phone: '050-3441005', link: '', lat: 31.9489, lng: 34.88849, rating: null, reviews: null },
+    { name: 'שי נשאוי - מגיע לבית הלקוחה', city: 'רמלה', address: '', phone: '050-3441005', link: '', lat: 31.928, lng: 34.86235, rating: null, reviews: null },
+    { name: 'שי נשאוי - מגיע לבית הלקוחה', city: 'באר יעקב', address: '', phone: '050-3441005', link: '', lat: 31.94435, lng: 34.83986, rating: null, reviews: null },
+    { name: 'שושי הלוי אלקבץ', city: 'ירושלים', address: 'דרך חברון / חנוך אלבק, תלפיות', phone: '052-3557979', link: 'https://www.shebyshoshana.com', lat: 31.72736, lng: 35.20492, rating: null, reviews: null },
+    { name: 'דניאל בן מעצב שיער', city: 'ירושלים', address: 'הלל 8', phone: '02-5387873', link: 'https://www.facebook.com/hairsalonjerusalem', lat: 31.78021, lng: 35.21672, rating: 4.7, reviews: 12 },
+    { name: 'ירון חייט', city: 'ירושלים', address: 'שד. משה דיין 166', phone: '050-4442315', link: '', lat: 31.8283, lng: 35.24022, rating: null, reviews: null },
+    { name: 'חיים הספר', city: 'ירושלים', address: 'רחוב חכם אברהם 2', phone: '02-6223311', link: 'https://www.instagram.com/haimhasapar', lat: 31.75703, lng: 35.18192, rating: 4.8, reviews: 30 },
+    { name: 'יעל בן ישי', city: 'ניר בנים', address: '', phone: '054-3129099', link: 'https://www.instagram.com/yael_ben_ishay', lat: 31.67172, lng: 34.75424, rating: null, reviews: null },
+    { name: 'המספרה של דנה', city: 'באר שבע', address: 'שכונה ב\'', phone: '052-9543770', link: 'https://www.facebook.com/danamaspera', lat: 31.25534, lng: 34.79209, rating: null, reviews: null },
+    { name: 'בראש גנוב - ירון סויסה', city: 'ירוחם', address: 'הרצל 841', phone: '08-6580596 / 050-5445859', link: 'https://www.facebook.com/yaron132', lat: 30.9911, lng: 34.92521, rating: 4.9, reviews: 121 },
+    { name: 'אושרי שוקרון', city: 'באר שבע', address: 'החלוץ 117', phone: '08-6652040', link: 'https://www.facebook.com/oshri.shokron', lat: 31.23888, lng: 34.78922, rating: 4.7, reviews: 76 },
+    { name: 'גיא מליחי', city: 'אשקלון', address: 'אלי כהן 19', phone: '054-7578921', link: 'https://www.facebook.com/guy.malihi', lat: 31.66786, lng: 34.56938, rating: 4.6, reviews: 63 },
+    { name: 'שירה ווס Vos Hair', city: 'כפר יונה', address: 'בנטל 4', phone: '052-5584243', link: 'https://www.instagram.com/vos_hair', lat: 32.32496, lng: 34.92456, rating: 5.0, reviews: 33 },
   ];
 
   // ── Leaflet map ───────────────────────────────────────────────
@@ -788,15 +525,32 @@
     });
   }
 
+  function linkLabel(url) {
+    if (url.includes('instagram.com')) return 'אינסטגרם';
+    if (url.includes('facebook.com')) return 'פייסבוק';
+    return 'אתר';
+  }
+
   const markers = SALONS.map(s => {
     const marker = L.marker([s.lat, s.lng], { icon: makeIcon(false) }).addTo(map);
+    const locationLine = s.address ? `${s.city} · ${s.address}` : s.city;
+    const ratingLine = (s.rating !== null && s.reviews !== null)
+      ? `<div style="font-size:11px;color:#f59e0b;margin-bottom:6px">★ ${s.rating} <span style="color:#9ca3af">(${s.reviews} ביקורות)</span></div>`
+      : `<div style="font-size:11px;color:#9ca3af;margin-bottom:6px">אין דירוג עדיין</div>`;
+    const phoneLine = s.phone
+      ? `<div style="font-size:11px;color:#6b7280;margin-bottom:6px" dir="ltr">${s.phone}</div>`
+      : '';
+    const gmapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(s.name + ' ' + s.city)}`;
     marker.bindPopup(`
-      <div style="direction:rtl;font-family:'Heebo',sans-serif">
+      <div style="direction:rtl;font-family:'Heebo',sans-serif;min-width:180px">
         <div style="font-weight:700;font-size:13px;margin-bottom:2px">${s.name}</div>
-        <div style="font-size:11px;color:#6b7280;margin-bottom:4px">${s.city} · ${s.address}</div>
-        <div style="font-size:11px;color:#f59e0b">★ ${s.rating} <span style="color:#9ca3af">(${s.reviews} ביקורות)</span></div>
+        <div style="font-size:11px;color:#6b7280;margin-bottom:4px">${locationLine}</div>
+        ${phoneLine}
+        ${ratingLine}
+        <a href="${gmapsUrl}" target="_blank" style="display:inline-block;font-size:11px;color:#9d7ecb;font-weight:600;text-decoration:none;border:1px solid #9d7ecb;border-radius:6px;padding:3px 8px">פתחי ב-Google Maps ↗</a>
+        ${s.link ? `<a href="${s.link}" target="_blank" rel="noopener" style="display:inline-block;font-size:11px;color:#9d7ecb;font-weight:600;text-decoration:none;border:1px solid #9d7ecb;border-radius:6px;padding:3px 8px;margin-top:4px">${linkLabel(s.link)} ↗</a>` : ''}
       </div>
-    `, { maxWidth: 200 });
+    `, { maxWidth: 220 });
     marker._salonData = s;
     return marker;
   });
@@ -817,9 +571,11 @@
     count.textContent = `${list.length} מספרות נמצאו`;
 
     list.forEach(s => {
-      const stars = '★'.repeat(Math.round(s.rating)) + '☆'.repeat(5 - Math.round(s.rating));
+      const hasRating = s.rating !== null && s.reviews !== null;
+      const stars = hasRating ? ('★'.repeat(Math.round(s.rating)) + '☆'.repeat(5 - Math.round(s.rating))) : '';
+      const locationLine = s.address ? `${s.city} · ${s.address}` : s.city;
       const card = document.createElement('div');
-      card.className = 'salon-card bg-gray-50 border border-gray-100 rounded-2xl p-5 cursor-pointer';
+      card.className = 'salon-card bg-lilac-100 border border-lilac-200 rounded-2xl p-5 cursor-pointer';
       card.innerHTML = `
         <div class="flex items-start justify-between mb-3">
           <div class="w-10 h-10 rounded-xl bg-lilac-50 border border-lilac-100 flex items-center justify-center flex-shrink-0">
@@ -827,15 +583,18 @@
           </div>
           <div class="text-right flex-1 mr-3">
             <div class="font-700 text-gray-900 text-sm leading-tight">${s.name}</div>
-            <div class="text-xs text-gray-400 mt-0.5">${s.city} · ${s.address}</div>
+            <div class="text-xs text-gray-400 mt-0.5">${locationLine}</div>
+            ${s.phone ? `<div class="text-xs text-gray-400 mt-0.5" dir="ltr">${s.phone}</div>` : ''}
+            ${s.link ? `<a href="${s.link}" target="_blank" rel="noopener" class="salon-link inline-flex items-center gap-1 text-sm text-lilac-500 hover:text-lilac-600 font-500 mt-1.5"><i data-lucide="external-link" class="w-3.5 h-3.5"></i>${linkLabel(s.link)}</a>` : ''}
           </div>
         </div>
         <div class="flex items-center justify-between">
-          <span class="text-xs text-gray-400">${s.reviews} ביקורות</span>
-          <span class="text-amber-400 text-sm font-600">${s.rating} <span class="text-xs text-amber-300">${stars}</span></span>
+          <span class="text-xs text-gray-400">${hasRating ? s.reviews + ' ביקורות' : 'אין דירוג עדיין'}</span>
+          ${hasRating ? `<span class="text-amber-400 text-sm font-600">${s.rating} <span class="text-xs text-amber-300">${stars}</span></span>` : ''}
         </div>
       `;
-      card.addEventListener('click', () => {
+      card.addEventListener('click', (e) => {
+        if (e.target.closest('.salon-link')) return;
         const m = markers.find(mk => mk._salonData === s);
         if (m) { map.setView([s.lat, s.lng], 13); m.openPopup(); }
         document.getElementById('search').scrollIntoView({ behavior: 'smooth' });
@@ -854,9 +613,10 @@
     document.getElementById('clear-btn').classList.toggle('hidden', !currentQuery);
 
     const filtered = SALONS.filter(s =>
-      s.name.includes(currentQuery) ||
-      s.city.includes(currentQuery) ||
-      s.address.includes(currentQuery)
+      s.name.toLowerCase().includes(currentQuery) ||
+      s.city.toLowerCase().includes(currentQuery) ||
+      s.address.toLowerCase().includes(currentQuery) ||
+      (s.phone && s.phone.includes(currentQuery))
     );
 
     // Update markers visibility
