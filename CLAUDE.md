@@ -47,4 +47,7 @@ Inline SVG phone mockup showing:
 ## Deployment
 - GitHub: `gh repo create תילתול --public --source=. --push`
 - Netlify: `npx netlify sites:create --name תילתול --account-slug ariela-povo`
-- Deploy: `npx netlify deploy --dir=. --prod`
+- Deploy (only the site files, never the whole folder):
+  `rm -rf deploy && mkdir deploy && cp index.html Hero4.png deploy/ && npx netlify deploy --dir=deploy --prod`
+- The `cp` list must hold exactly the local files the page uses (currently `index.html`, `Hero4.png`). Update it when the page starts using a new image.
+- Never `--dir=.` and never `git add .` / `git add -A`. This folder holds private documents and spreadsheets. Add files to git by name.
